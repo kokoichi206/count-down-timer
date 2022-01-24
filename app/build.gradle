@@ -8,12 +8,12 @@ def versionMinor = 0
 def versionPatch = 1
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "jp.mydns.kokoichi0206.countdowntimer"
         minSdk 23
-        targetSdk 32
+        targetSdk 31
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
