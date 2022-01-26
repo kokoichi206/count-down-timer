@@ -23,6 +23,7 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.util.ChangeActionBarColor
 import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
@@ -33,7 +34,9 @@ import java.time.LocalDateTime
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
 @Composable
-fun Home() {
+fun Home(
+    presenter: MainContract.Presenter,
+) {
     val paddingLarge = 24.dp
 
     var step by remember {
@@ -118,6 +121,7 @@ fun Home() {
         var selectedDate by remember {
             mutableStateOf(Constants.DefaultSelectedDate)
         }
+
         MaterialDialog(
             dialogState = dateDialogState,
             buttons = {
@@ -163,6 +167,8 @@ fun Home() {
                 startedAt = LocalDateTime.now()
 
                 cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
+
+                presenter.onDateTimeRegistered(startedAt, deadLine)
             }
         }
         when (step) {

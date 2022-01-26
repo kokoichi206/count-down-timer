@@ -13,7 +13,7 @@ import jp.mydns.kokoichi0206.countdowntimer.module.main.assembler.MainAssembler
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
 
-class MainActivity : ComponentActivity(), MainContract.View {
+open class MainActivity : ComponentActivity(), MainContract.View {
     lateinit var presenter: MainContract.Presenter
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity(), MainContract.View {
             CountDownTimerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Home()
+                    Home(
+                        presenter = presenter
+                    )
                 }
             }
         }
