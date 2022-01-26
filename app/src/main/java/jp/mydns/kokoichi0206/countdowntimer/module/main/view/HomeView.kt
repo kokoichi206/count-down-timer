@@ -26,6 +26,9 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import jp.mydns.kokoichi0206.countdowntimer.util.ChangeActionBarColor
 import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
+import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
+import kotlinx.coroutines.delay
+import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
@@ -37,6 +40,15 @@ fun Home() {
         mutableStateOf(SelectionStep.NONE)
     }
 
+    // For backup
+    var startedAt = LocalDateTime.now()
+
+    var deadLine by remember {
+        mutableStateOf(Constants.DefaultDataTime)
+    }
+    var cTime by remember {
+        mutableStateOf(0L)
+    }
     var percentage by remember {
         mutableStateOf(1f)
     }
@@ -88,7 +100,7 @@ fun Home() {
                     SelectionStep.NONE -> 1f
                     else -> percentage
                 },
-                displayTime = formattedTimeFromMilliSeconds(30000),
+                displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
                 fontSize = 36.sp,
                 radius = boxWithConstraintsScope.maxWidth / 2,
                 color = MaterialTheme.colors.primary,
@@ -103,6 +115,9 @@ fun Home() {
 
         // Date picker dialog
         val dateDialogState = rememberMaterialDialogState()
+        var selectedDate by remember {
+            mutableStateOf(Constants.DefaultSelectedDate)
+        }
         MaterialDialog(
             dialogState = dateDialogState,
             buttons = {
@@ -116,12 +131,16 @@ fun Home() {
             },
         ) {
             datepicker { date ->
+                selectedDate = date
                 // Next Step
                 step = SelectionStep.TIME
             }
         }
 
         // Time picker dialog
+        var selectedTime by remember {
+            mutableStateOf(Constants.DefaultSelectedTime)
+        }
         val timeDialogState = rememberMaterialDialogState()
         MaterialDialog(
             dialogState = timeDialogState,
@@ -137,7 +156,13 @@ fun Home() {
         ) {
             timepicker { time ->
                 // DataTime setup finished!
+                selectedTime = time
                 step = SelectionStep.DONE
+
+                deadLine = LocalDateTime.of(selectedDate, selectedTime)
+                startedAt = LocalDateTime.now()
+
+                cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
             }
         }
         when (step) {
@@ -148,6 +173,16 @@ fun Home() {
                 timeDialogState.show()
             }
             SelectionStep.NONE, SelectionStep.DONE -> {}
+        }
+    }
+
+    // Timer
+    LaunchedEffect(key1 = deadLine, key2 = cTime) {
+        if (cTime > 0) {
+            delay(Constants.TimerInterval)
+            cTime = milliSecondsBetween2DateTime(deadLine, LocalDateTime.now())
+
+            percentage = cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
         }
     }
 
