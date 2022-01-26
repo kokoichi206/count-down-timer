@@ -72,4 +72,7 @@ dependencies {
 
     // Number picker
     implementation "io.github.vanpra.compose-material-dialogs:datetime:0.6.3"
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

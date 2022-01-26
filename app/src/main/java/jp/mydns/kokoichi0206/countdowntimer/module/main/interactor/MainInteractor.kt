@@ -5,11 +5,16 @@ import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.viper.InteractorCallback
 
 class MainInteractor(context: Context) : MainContract.Interactor {
-    override fun setInteractorCallback(callback: InteractorCallback) {
 
+    lateinit var callback: MainContract.InteractorCallback
+
+    override fun setInteractorCallback(callback: InteractorCallback) {
+        if(callback is MainContract.InteractorCallback) {
+            this.callback = callback
+        }
     }
 
-    override fun onDisassemble() {
 
+    override fun onDisassemble() {
     }
 }

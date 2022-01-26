@@ -13,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
 @Composable
 fun CircularProgressBar(
@@ -50,7 +52,11 @@ fun CircularProgressBar(
         contentAlignment = Alignment.Center,
         modifier = modifier.size(radius * 2f)
     ) {
-        Canvas(modifier = Modifier.size(radius * 2f)) {
+        Canvas(
+            modifier = Modifier
+                .size(radius * 2f)
+                .testTag(TestTags.HOME_CIRCLE)
+        ) {
             drawArc(
                 color = color,
                 -90f,
@@ -63,7 +69,8 @@ fun CircularProgressBar(
             modifier = Modifier
                 .clickable {
                     onNumberClick()
-                },
+                }
+                .testTag(TestTags.HOME_DISPLAYED_TIME),
             text = displayTime,
             color = Color.White,
             fontSize = fontSize,
