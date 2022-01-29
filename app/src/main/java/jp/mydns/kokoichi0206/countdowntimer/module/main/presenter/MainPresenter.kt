@@ -15,17 +15,32 @@ class MainPresenter(
         interactor?.readInitialSettings()
     }
 
-    override suspend fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override suspend fun onDateTimeRegistered(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         // ユーザーが時間の登録を終えた時、
         // DBへの書き込みを開始する。
+        interactor?.writeTitle(title)
         interactor?.writeStartedAt(startedAt)
         interactor?.writeDeadline(deadLine)
     }
 
-    override fun onReadInitialSettingsCompleted(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override suspend fun onTitleRegistered(title: String) {
+        // ユーザーがタイトルの入力を完了した時、
+        // タイトルをのDBへの書き込みを開始する。
+        interactor?.writeTitle(title)
+    }
+
+    override fun onReadInitialSettingsCompleted(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         // DBの前回設定の読み込みが完了した時、
         // それをもとに画面を表示させる。
-        view?.setMainViewWithTime(startedAt = startedAt, deadLine = deadLine)
+        view?.setMainViewWithTime(title = title, startedAt = startedAt, deadLine = deadLine)
     }
 
     override fun onReadInitialSettingsFailed() {

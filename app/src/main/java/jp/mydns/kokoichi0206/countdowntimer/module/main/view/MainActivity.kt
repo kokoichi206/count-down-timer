@@ -44,13 +44,18 @@ open class MainActivity : ComponentActivity(), MainContract.View {
     }
 
     @ExperimentalComposeUiApi
-    override fun setMainViewWithTime(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override fun setMainViewWithTime(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         setContent {
             CountDownTimerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Home(
                         presenter = presenter,
+                        initialTitle = title,
                         startedTime = startedAt,
                         deadline = deadLine,
                     )

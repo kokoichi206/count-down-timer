@@ -22,13 +22,22 @@ open class MainInteractor(
     }
 
     override suspend fun readInitialSettings() {
+        val title = getTitle()
         val startedAt = getStartedTime()
         val deadLine = getDeadLine()
         if (startedAt != null && deadLine != null) {
-            callback.onReadInitialSettingsCompleted(startedAt, deadLine)
+            callback.onReadInitialSettingsCompleted(title, startedAt, deadLine)
         } else {
             callback.onReadInitialSettingsFailed()
         }
+    }
+
+    open suspend fun getTitle(): String {
+        // キーが存在しない場合 ""（空文字）が返ってくる
+        return dataStoreManager.readString(
+            context = context,
+            key = DataStoreManager.KEY_TIMER_TITLE,
+        )
     }
 
     open suspend fun getStartedTime(): LocalDateTime? {
@@ -53,6 +62,14 @@ open class MainInteractor(
         }
         val formatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
         return LocalDateTime.parse(deadLineStr, formatter)
+    }
+
+    override suspend fun writeTitle(title: String) {
+        dataStoreManager.writeString(
+            context = context,
+            key = DataStoreManager.KEY_TIMER_TITLE,
+            value = title,
+        )
     }
 
     override suspend fun writeStartedAt(startedAt: LocalDateTime) {

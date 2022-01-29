@@ -8,6 +8,7 @@ class MockInteractorCallback(
     val counter: MethodCallCounter = MethodCallCounter(),
 ) : MainContract.InteractorCallback {
 
+    var title: String? = null
     var startedAt: LocalDateTime? = null
     var deadLine: LocalDateTime? = null
 
@@ -16,7 +17,12 @@ class MockInteractorCallback(
         ON_READ_INITIAL_SETTINGS_FAILED,
     }
 
-    override fun onReadInitialSettingsCompleted(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override fun onReadInitialSettingsCompleted(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
+        this.title = title
         this.startedAt = startedAt
         this.deadLine = deadLine
         counter.increment(MockedMethod.ON_READ_INITIAL_SETTINGS_COMPLETED.name)
@@ -28,6 +34,7 @@ class MockInteractorCallback(
 
     fun clearMock() {
         counter.clear()
+        title = null
         startedAt = null
         deadLine = null
     }

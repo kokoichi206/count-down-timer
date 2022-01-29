@@ -16,8 +16,15 @@ class MockMainPresenter : MainContract.Presenter {
     override suspend fun onCreate() {
     }
 
-    override suspend fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override suspend fun onDateTimeRegistered(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         counter.increment(MockedMethod.ON_DATE_TIME_REGISTERED.name)
+    }
+
+    override suspend fun onTitleRegistered(title: String) {
     }
 
     override fun disassembleModules() {

@@ -23,6 +23,7 @@ open class DataStoreManager {
      * Key sets for Data store.
      */
     companion object {
+        const val KEY_TIMER_TITLE = "title"
         const val KEY_STARTED_AT = "started_at"
         const val KEY_DEADLINE = "deadline"
     }

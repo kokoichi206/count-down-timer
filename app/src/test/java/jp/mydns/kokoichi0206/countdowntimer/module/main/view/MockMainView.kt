@@ -10,6 +10,7 @@ class MockMainView(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : MainContract.View {
 
+    var title: String = ""
     var startedAt: LocalDateTime? = null
     var deadLine: LocalDateTime? = null
 
@@ -23,8 +24,13 @@ class MockMainView(
         counter.increment(MockedMethod.SET_MAIN_VIEW.name)
     }
 
-    override fun setMainViewWithTime(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override fun setMainViewWithTime(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         counter.increment(MockedMethod.SET_MAIN_VIEW_WITH_TIME.name)
+        this.title = title
         this.startedAt = startedAt
         this.deadLine = deadLine
     }
@@ -42,6 +48,7 @@ class MockMainView(
 
     fun clearMock() {
         counter.clear()
+        title = ""
         startedAt = null
         deadLine = null
     }
