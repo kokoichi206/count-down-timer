@@ -39,6 +39,10 @@ class MainInteractorWithMockTest {
         mockDataStoreManager.clear()
         assertEquals(
             0,
+            interactor.getCount(MainInteractorWithMock.MockedMethod.GET_TITLE)
+        )
+        assertEquals(
+            0,
             interactor.getCount(MainInteractorWithMock.MockedMethod.GET_STARTED_TIME)
         )
         assertEquals(
@@ -66,8 +70,10 @@ class MainInteractorWithMockTest {
     @Test
     fun readInitialSettings() = runBlocking {
         // Arrange
+        val title = "This is my title"
         val startedAt = LocalDateTime.of(1970, 1, 1, 9, 11)
-        val deadLine = LocalDateTime.of(1974,  3, 3, 5, 34)
+        val deadLine = LocalDateTime.of(1974, 3, 3, 5, 34)
+        interactor.title = title
         interactor.startedAt = startedAt
         interactor.deadLine = deadLine
 
@@ -75,6 +81,10 @@ class MainInteractorWithMockTest {
         interactor.readInitialSettings()
 
         // Assert
+        assertEquals(
+            1,
+            interactor.getCount(MainInteractorWithMock.MockedMethod.GET_TITLE)
+        )
         assertEquals(
             1,
             interactor.getCount(MainInteractorWithMock.MockedMethod.GET_STARTED_TIME)
@@ -91,14 +101,15 @@ class MainInteractorWithMockTest {
             0,
             mockInteractorCallback.getCount(MockInteractorCallback.MockedMethod.ON_READ_INITIAL_SETTINGS_FAILED)
         )
-        assertEquals(mockInteractorCallback.startedAt, startedAt)
-        assertEquals(mockInteractorCallback.deadLine, deadLine)
+        assertEquals(title, mockInteractorCallback.title)
+        assertEquals(startedAt, mockInteractorCallback.startedAt)
+        assertEquals(deadLine, mockInteractorCallback.deadLine)
     }
 
     @Test
     fun readInitialSettingsWithNullStartedAt() = runBlocking {
         // Arrange
-        val startedAt = LocalDateTime.of(1974,  3, 3, 5, 34)
+        val startedAt = LocalDateTime.of(1974, 3, 3, 5, 34)
         interactor.startedAt = startedAt
         interactor.deadLine = null
 
@@ -106,6 +117,10 @@ class MainInteractorWithMockTest {
         interactor.readInitialSettings()
 
         // Assert
+        assertEquals(
+            1,
+            interactor.getCount(MainInteractorWithMock.MockedMethod.GET_TITLE)
+        )
         assertEquals(
             1,
             interactor.getCount(MainInteractorWithMock.MockedMethod.GET_STARTED_TIME)
@@ -127,7 +142,7 @@ class MainInteractorWithMockTest {
     @Test
     fun readInitialSettingsWithNullDeadLine() = runBlocking {
         // Arrange
-        val deadLine = LocalDateTime.of(1974,  3, 3, 5, 34)
+        val deadLine = LocalDateTime.of(1974, 3, 3, 5, 34)
         interactor.startedAt = null
         interactor.deadLine = deadLine
 
@@ -135,6 +150,10 @@ class MainInteractorWithMockTest {
         interactor.readInitialSettings()
 
         // Assert
+        assertEquals(
+            1,
+            interactor.getCount(MainInteractorWithMock.MockedMethod.GET_TITLE)
+        )
         assertEquals(
             1,
             interactor.getCount(MainInteractorWithMock.MockedMethod.GET_STARTED_TIME)
@@ -156,6 +175,7 @@ class MainInteractorWithMockTest {
     @Test
     fun readInitialSettingsWithNoInitialValue() = runBlocking {
         // Arrange
+        interactor.title = "Something"
         interactor.startedAt = null
         interactor.deadLine = null
 
@@ -163,6 +183,10 @@ class MainInteractorWithMockTest {
         interactor.readInitialSettings()
 
         // Assert
+        assertEquals(
+            1,
+            interactor.getCount(MainInteractorWithMock.MockedMethod.GET_TITLE)
+        )
         assertEquals(
             1,
             interactor.getCount(MainInteractorWithMock.MockedMethod.GET_STARTED_TIME)
@@ -179,6 +203,23 @@ class MainInteractorWithMockTest {
             1,
             mockInteractorCallback.getCount(MockInteractorCallback.MockedMethod.ON_READ_INITIAL_SETTINGS_FAILED)
         )
+    }
+
+    @Test
+    fun writeTitle() = runBlocking {
+        // Arrange
+        val title = "This is my title"
+
+        // Act
+        interactor.writeTitle(title)
+
+        // Assert
+        assertEquals(
+            1,
+            mockDataStoreManager.getCount(MockDataStoreManager.MockedMethod.WRITE_STRING)
+        )
+        assertEquals(DataStoreManager.KEY_TIMER_TITLE, mockDataStoreManager.stringKey)
+        assertEquals(title, mockDataStoreManager.stringValue)
     }
 
     @Test

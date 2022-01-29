@@ -8,15 +8,22 @@ import java.time.LocalDateTime
 class MainInteractorWithMock(
     var context: Context,
     var mockDataStoreManager: MockDataStoreManager = MockDataStoreManager(),
-    var counter : MethodCallCounter = MethodCallCounter(),
+    var counter: MethodCallCounter = MethodCallCounter(),
 ) : MainInteractor(context, mockDataStoreManager) {
 
+    var title: String = ""
     var startedAt: LocalDateTime? = null
     var deadLine: LocalDateTime? = null
 
     enum class MockedMethod {
+        GET_TITLE,
         GET_STARTED_TIME,
         GET_DEAD_LINE,
+    }
+
+    override suspend fun getTitle(): String {
+        counter.increment(MockedMethod.GET_TITLE.name)
+        return title
     }
 
     override suspend fun getStartedTime(): LocalDateTime? {
@@ -31,6 +38,7 @@ class MainInteractorWithMock(
 
     fun clearMock() {
         counter.clear()
+        title = ""
         startedAt = null
         deadLine = null
     }

@@ -41,6 +41,25 @@ class MainInteractorTest {
     }
 
     @Test
+    fun getTitle() = runBlocking {
+        // Arrange
+        val title = "This is my timer title"
+        mockDataStoreManager.stringValue = title
+
+        // Act
+        val result = interactor.getTitle()
+
+        // Assert
+        assertEquals(result, title)
+        assertEquals(
+            1,
+            mockDataStoreManager.getCount(MockDataStoreManager.MockedMethod.READ_STRING)
+        )
+        assertEquals(DataStoreManager.KEY_TIMER_TITLE, mockDataStoreManager.stringKey)
+    }
+
+
+    @Test
     fun getStartedTime() = runBlocking {
         // Arrange
         val startedAtStr = "1970-01-01 09:00:00"
