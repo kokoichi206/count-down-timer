@@ -22,11 +22,15 @@ class MainPresenter(
     ) {
         // ユーザーが時間の登録を終えた時、
         // DBへの書き込みを開始する。
+        interactor?.writeTitle(title)
         interactor?.writeStartedAt(startedAt)
         interactor?.writeDeadline(deadLine)
     }
 
     override suspend fun onTitleRegistered(title: String) {
+        // ユーザーがタイトルの入力を完了した時、
+        // タイトルをのDBへの書き込みを開始する。
+        interactor?.writeTitle(title)
     }
 
     override fun onReadInitialSettingsCompleted(
