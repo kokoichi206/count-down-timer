@@ -9,11 +9,13 @@ class MockMainInteractor(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : MainContract.Interactor {
 
+    var title: String = ""
     var startedAt: LocalDateTime? = null
     var deadLine: LocalDateTime? = null
 
     enum class MockedMethod {
         READ_INITIAL_SETTINGS,
+        WRITE_TITLE,
         WRITE_STARTED_AT,
         WRITE_DEADLINE,
         ON_DISASSEMBLE,
@@ -24,6 +26,8 @@ class MockMainInteractor(
     }
 
     override suspend fun writeTitle(title: String) {
+        counter.increment(MockedMethod.WRITE_TITLE.name)
+        this.title = title
     }
 
     override suspend fun writeStartedAt(startedAt: LocalDateTime) {
@@ -45,6 +49,7 @@ class MockMainInteractor(
 
     fun clearMock() {
         counter.clear()
+        title = ""
         startedAt = null
         deadLine = null
     }

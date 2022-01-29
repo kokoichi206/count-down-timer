@@ -105,7 +105,26 @@ class MainPresenterTest {
         )
         assertEquals(
             1,
+            mockInteractor.getCount(MockMainInteractor.MockedMethod.WRITE_STARTED_AT)
+        )
+        assertEquals(
+            1,
             mockInteractor.getCount(MockMainInteractor.MockedMethod.WRITE_DEADLINE)
+        )
+    }
+
+    @Test
+    fun onTitleRegistered() = runBlocking {
+        // Arrange
+        val title = "Title"
+
+        // Act
+        presenter.onTitleRegistered(title)
+
+        // Assert
+        assertEquals(
+            1,
+            mockInteractor.getCount(MockMainInteractor.MockedMethod.WRITE_TITLE)
         )
     }
 
@@ -127,6 +146,7 @@ class MainPresenterTest {
             1,
             mockView.getCount(MockMainView.MockedMethod.SET_MAIN_VIEW_WITH_TIME)
         )
+        assertEquals(title, mockView.title)
         assertEquals(startedAt, mockView.startedAt)
         assertEquals(startedAt, mockView.startedAt)
     }
