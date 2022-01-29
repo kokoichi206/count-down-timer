@@ -31,8 +31,8 @@ class MainContract {
     }
 
     interface Presenter : jp.mydns.kokoichi0206.viper.Presenter {
-        fun onCreate()
+        suspend fun onCreate()
 
-        fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime)
+        suspend fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime)
     }
 }

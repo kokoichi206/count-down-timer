@@ -27,6 +27,7 @@ import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
 import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
 @ExperimentalComposeUiApi
@@ -185,7 +186,9 @@ fun Home(
 
                 cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
 
-                presenter.onDateTimeRegistered(startedAt, deadLine)
+                runBlocking {
+                    presenter.onDateTimeRegistered(startedAt, deadLine)
+                }
             }
         }
         when (step) {

@@ -10,6 +10,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import jp.mydns.kokoichi0206.countdowntimer.module.main.assembler.MainAssembler
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
 open class MainActivity : ComponentActivity(), MainContract.View {
@@ -19,7 +22,11 @@ open class MainActivity : ComponentActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = beginAssembleModules(this)
-        presenter.onCreate()
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                presenter.onCreate()
+            }
+        }
     }
 
     @ExperimentalComposeUiApi
@@ -52,16 +59,15 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         }
     }
 
-    override fun onDisassemble() {
-        TODO("Not yet implemented")
-    }
-
     override fun beginAssembleModules(context: Context): MainContract.Presenter {
         val assembler = MainAssembler()
         return assembler.assembleModules(context)
     }
 
     override fun beginDisassembleModules() {
-        TODO("Not yet implemented")
+        presenter.disassembleModules()
+    }
+
+    override fun onDisassemble() {
     }
 }
