@@ -9,6 +9,9 @@ class MainPresenter(
     router: MainContract.Router
 ) : MainContract.Presenter, MainContract.InteractorCallback {
 
+    override fun onCreate() {
+    }
+
     override fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime) {
     }
 

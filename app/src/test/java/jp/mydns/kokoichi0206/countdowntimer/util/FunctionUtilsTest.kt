@@ -14,7 +14,7 @@ class FunctionUtilsTest {
         // works        09:00
         val str = "1970-01-01 09:00"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime = LocalDateTime.parse(str, formatter);
+        val dateTime = LocalDateTime.parse(str, formatter)
 
         // Act
         val result = milliSecondsFromLocalDataTime(dateTime)
@@ -43,8 +43,8 @@ class FunctionUtilsTest {
         // Arrange
         val str = "1999-01-11 15:32"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime1 = LocalDateTime.parse(str, formatter);
-        val dateTime2 = LocalDateTime.parse(str, formatter);
+        val dateTime1 = LocalDateTime.parse(str, formatter)
+        val dateTime2 = LocalDateTime.parse(str, formatter)
 
         // Act
         val result = milliSecondsBetween2DateTime(dateTime1, dateTime2)
@@ -60,8 +60,8 @@ class FunctionUtilsTest {
         // 3 days ago
         val str2 = "1999-01-13 15:32"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime1 = LocalDateTime.parse(str1, formatter);
-        val dateTime2 = LocalDateTime.parse(str2, formatter);
+        val dateTime1 = LocalDateTime.parse(str1, formatter)
+        val dateTime2 = LocalDateTime.parse(str2, formatter)
 
         // Act
         val result = milliSecondsBetween2DateTime(dateTime2, dateTime1)

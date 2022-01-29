@@ -36,24 +36,43 @@ import java.time.LocalDateTime
 @Composable
 fun Home(
     presenter: MainContract.Presenter,
+    startedTime: LocalDateTime? = null,
+    deadline: LocalDateTime? = null,
 ) {
     val paddingLarge = 24.dp
 
     var step by remember {
-        mutableStateOf(SelectionStep.NONE)
+        mutableStateOf(
+            SelectionStep.NONE
+        )
     }
 
     // For backup
-    var startedAt = LocalDateTime.now()
+    var startedAt = startedTime ?: LocalDateTime.now()
 
     var deadLine by remember {
-        mutableStateOf(Constants.DefaultDataTime)
+        mutableStateOf(deadline ?: Constants.DefaultDataTime)
     }
     var cTime by remember {
-        mutableStateOf(0L)
+        mutableStateOf(
+            if (deadLine == null) {
+                0L
+            } else {
+                milliSecondsBetween2DateTime(
+                    deadLine,
+                    LocalDateTime.now()
+                )
+            }
+        )
     }
     var percentage by remember {
-        mutableStateOf(1f)
+        mutableStateOf(
+            if (deadline == null || startedTime == null) {
+                1f
+            } else {
+                cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
+            }
+        )
     }
 
     Box(
@@ -99,9 +118,10 @@ fun Home(
             val boxWithConstraintsScope = this
 
             CircularProgressBar(
-                percentage = when (step) {
-                    SelectionStep.NONE -> 1f
-                    else -> percentage
+                percentage = if (cTime > 0) {
+                    percentage
+                } else {
+                    1f
                 },
                 displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
                 fontSize = 36.sp,

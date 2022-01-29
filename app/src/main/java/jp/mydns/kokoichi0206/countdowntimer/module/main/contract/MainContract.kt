@@ -5,6 +5,12 @@ import java.time.LocalDateTime
 class MainContract {
 
     interface View : jp.mydns.kokoichi0206.viper.View {
+        fun setMainView()
+
+        fun setMainViewWithTime(
+            startedAt: LocalDateTime,
+            deadLine: LocalDateTime,
+        )
     }
 
     interface Interactor : jp.mydns.kokoichi0206.viper.Interactor {
@@ -17,6 +23,8 @@ class MainContract {
     }
 
     interface Presenter : jp.mydns.kokoichi0206.viper.Presenter {
+        fun onCreate()
+
         fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime)
     }
 }
