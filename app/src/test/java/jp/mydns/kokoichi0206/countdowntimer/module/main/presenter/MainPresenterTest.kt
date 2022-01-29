@@ -88,6 +88,7 @@ class MainPresenterTest {
     @Test
     fun onDateTimeRegistered() = runBlocking {
         // Arrange
+        val title = "FINISH HOMEWORK"
         val startedAtStr = "1970-01-01 09:00:00"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val startedAt = LocalDateTime.parse(startedAtStr, formatter)
@@ -95,7 +96,7 @@ class MainPresenterTest {
         val deadLine = LocalDateTime.parse(deadLineStr, formatter)
 
         // Act
-        presenter.onDateTimeRegistered(startedAt, deadLine)
+        presenter.onDateTimeRegistered(title, startedAt, deadLine)
 
         // Assert
         assertEquals(

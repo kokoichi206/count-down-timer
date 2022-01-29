@@ -8,6 +8,7 @@ class MainContract {
         fun setMainView()
 
         fun setMainViewWithTime(
+            title: String,
             startedAt: LocalDateTime,
             deadLine: LocalDateTime,
         )
@@ -33,6 +34,10 @@ class MainContract {
     interface Presenter : jp.mydns.kokoichi0206.viper.Presenter {
         suspend fun onCreate()
 
-        suspend fun onDateTimeRegistered(startedAt: LocalDateTime, deadLine: LocalDateTime)
+        suspend fun onDateTimeRegistered(
+            startedAt: LocalDateTime,
+            deadLine: LocalDateTime
+        )
+        suspend fun onTitleRegistered(title: String)
     }
 }

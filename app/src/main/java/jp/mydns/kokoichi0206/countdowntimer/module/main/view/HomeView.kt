@@ -34,6 +34,7 @@ import java.time.LocalDateTime
 @Composable
 fun Home(
     presenter: MainContract.Presenter,
+    initialTitle: String? = null,
     startedTime: LocalDateTime? = null,
     deadline: LocalDateTime? = null,
 ) {
@@ -43,6 +44,10 @@ fun Home(
         mutableStateOf(
             SelectionStep.NONE
         )
+    }
+
+    val title = remember {
+        mutableStateOf(initialTitle ?: "")
     }
 
     // For backup
@@ -79,9 +84,6 @@ fun Home(
             .background(MaterialTheme.colors.background)
             .padding(paddingLarge),
     ) {
-        val title = remember {
-            mutableStateOf("")
-        }
         val focusManager = LocalFocusManager.current
 
         val titleStyle = TextStyle(
@@ -102,6 +104,10 @@ fun Home(
             textStyle = titleStyle,
             onDone = {
                 focusManager.clearFocus()
+
+                runBlocking {
+                    presenter.onTitleRegistered(title.value)
+                }
             }
         )
 
@@ -187,7 +193,7 @@ fun Home(
                 cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
 
                 runBlocking {
-                    presenter.onDateTimeRegistered(startedAt, deadLine)
+                    presenter.onDateTimeRegistered(title.value, startedAt, deadLine)
                 }
             }
         }

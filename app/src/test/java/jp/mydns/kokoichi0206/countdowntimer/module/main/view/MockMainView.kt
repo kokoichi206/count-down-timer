@@ -23,7 +23,11 @@ class MockMainView(
         counter.increment(MockedMethod.SET_MAIN_VIEW.name)
     }
 
-    override fun setMainViewWithTime(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override fun setMainViewWithTime(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         counter.increment(MockedMethod.SET_MAIN_VIEW_WITH_TIME.name)
         this.startedAt = startedAt
         this.deadLine = deadLine
