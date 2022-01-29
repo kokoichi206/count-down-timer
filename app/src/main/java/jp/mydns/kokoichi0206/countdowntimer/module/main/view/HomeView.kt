@@ -1,7 +1,5 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -31,7 +29,6 @@ import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
 @Composable
 fun Home(

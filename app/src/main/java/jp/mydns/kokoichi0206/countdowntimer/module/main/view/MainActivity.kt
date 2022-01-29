@@ -1,11 +1,9 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,7 +15,6 @@ import java.time.LocalDateTime
 open class MainActivity : ComponentActivity(), MainContract.View {
     lateinit var presenter: MainContract.Presenter
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +22,6 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         presenter.onCreate()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalComposeUiApi
     override fun setMainView() {
         setContent {
@@ -40,7 +36,6 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalComposeUiApi
     override fun setMainViewWithTime(startedAt: LocalDateTime, deadLine: LocalDateTime) {
         setContent {

@@ -1,18 +1,14 @@
 package jp.mydns.kokoichi0206.countdowntimer.util
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun milliSecondsBetween2DateTime(endDateTime: LocalDateTime, startDateTime: LocalDateTime): Long {
     return milliSecondsFromLocalDataTime(endDateTime) - milliSecondsFromLocalDataTime(startDateTime)
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun milliSecondsFromLocalDataTime(dateTime: LocalDateTime): Long {
     return dateTime.atOffset(Constants.TokyoZoneOffset).toInstant().toEpochMilli()
 }
