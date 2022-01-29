@@ -18,4 +18,10 @@ class MainPresenter(
     override fun disassembleModules() {
 
     }
+
+    override fun onReadInitialSettingsCompleted(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    }
+
+    override fun onReadInitialSettingsFailed() {
+    }
 }
