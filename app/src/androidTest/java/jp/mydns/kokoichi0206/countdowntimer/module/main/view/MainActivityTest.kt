@@ -22,6 +22,9 @@ class MainActivityTest {
     @Before
     fun setUp() {
         val presenter = MockMainPresenter()
+        composeRule.setContent {
+            Home(presenter)
+        }
     }
 
     @After
