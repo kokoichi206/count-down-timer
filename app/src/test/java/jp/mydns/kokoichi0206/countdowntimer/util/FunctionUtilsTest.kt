@@ -12,9 +12,9 @@ class FunctionUtilsTest {
         // Arrange
         // doesn't work  9:00
         // works        09:00
-        val str = "1970-01-01 09:00"
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime = LocalDateTime.parse(str, formatter);
+        val str = "1970-01-01 09:00:00"
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val dateTime = LocalDateTime.parse(str, formatter)
 
         // Act
         val result = milliSecondsFromLocalDataTime(dateTime)
@@ -27,8 +27,8 @@ class FunctionUtilsTest {
     fun `milliSecondsFromLocalDataTime for four-year returns correctly`() {
         // Arrange
         // including a leap year
-        val str = "1974-01-01 09:00"
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val str = "1974-01-01 09:00:00"
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val dateTime = LocalDateTime.parse(str, formatter);
 
         // Act
@@ -41,10 +41,10 @@ class FunctionUtilsTest {
     @Test
     fun `milliSecondsBetween2DateTime for the same datetime returns correctly`() {
         // Arrange
-        val str = "1999-01-11 15:32"
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime1 = LocalDateTime.parse(str, formatter);
-        val dateTime2 = LocalDateTime.parse(str, formatter);
+        val str = "1999-01-11 15:32:33"
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val dateTime1 = LocalDateTime.parse(str, formatter)
+        val dateTime2 = LocalDateTime.parse(str, formatter)
 
         // Act
         val result = milliSecondsBetween2DateTime(dateTime1, dateTime2)
@@ -56,12 +56,12 @@ class FunctionUtilsTest {
     @Test
     fun `milliSecondsBetween2DateTime returns correctly`() {
         // Arrange
-        val str1 = "1999-01-11 15:32"
+        val str1 = "1999-01-11 15:32:33"
         // 3 days ago
-        val str2 = "1999-01-13 15:32"
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val dateTime1 = LocalDateTime.parse(str1, formatter);
-        val dateTime2 = LocalDateTime.parse(str2, formatter);
+        val str2 = "1999-01-13 15:32:33"
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val dateTime1 = LocalDateTime.parse(str1, formatter)
+        val dateTime2 = LocalDateTime.parse(str2, formatter)
 
         // Act
         val result = milliSecondsBetween2DateTime(dateTime2, dateTime1)

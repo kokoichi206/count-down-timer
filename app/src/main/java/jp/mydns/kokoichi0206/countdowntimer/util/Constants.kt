@@ -17,9 +17,10 @@ object Constants {
     const val OK_BUTTON_TEXT = "Ok"
     const val CANCEL_BUTTON_TEXT = "Cancel"
 
+    const val DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss"
     val DefaultDataTime = LocalDateTime.parse(
         "2016-03-04 11:30:40",
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        DateTimeFormatter.ofPattern(DATETIME_PATTERN)
     )
     val DefaultSelectedDate = LocalDate.of(2011, 1, 1)
     val DefaultSelectedTime = LocalTime.of(0, 1, 2)

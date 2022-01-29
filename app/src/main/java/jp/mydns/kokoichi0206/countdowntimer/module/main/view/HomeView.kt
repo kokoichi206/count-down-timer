@@ -1,7 +1,5 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,34 +21,56 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
+import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.util.ChangeActionBarColor
 import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
 import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
 @Composable
-fun Home() {
+fun Home(
+    presenter: MainContract.Presenter,
+    startedTime: LocalDateTime? = null,
+    deadline: LocalDateTime? = null,
+) {
     val paddingLarge = 24.dp
 
     var step by remember {
-        mutableStateOf(SelectionStep.NONE)
+        mutableStateOf(
+            SelectionStep.NONE
+        )
     }
 
     // For backup
-    var startedAt = LocalDateTime.now()
+    var startedAt = startedTime ?: LocalDateTime.now()
 
     var deadLine by remember {
-        mutableStateOf(Constants.DefaultDataTime)
+        mutableStateOf(deadline ?: Constants.DefaultDataTime)
     }
     var cTime by remember {
-        mutableStateOf(0L)
+        mutableStateOf(
+            if (deadLine == null) {
+                0L
+            } else {
+                milliSecondsBetween2DateTime(
+                    deadLine,
+                    LocalDateTime.now()
+                )
+            }
+        )
     }
     var percentage by remember {
-        mutableStateOf(1f)
+        mutableStateOf(
+            if (deadline == null || startedTime == null) {
+                1f
+            } else {
+                cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
+            }
+        )
     }
 
     Box(
@@ -96,9 +116,10 @@ fun Home() {
             val boxWithConstraintsScope = this
 
             CircularProgressBar(
-                percentage = when (step) {
-                    SelectionStep.NONE -> 1f
-                    else -> percentage
+                percentage = if (cTime > 0) {
+                    percentage
+                } else {
+                    1f
                 },
                 displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
                 fontSize = 36.sp,
@@ -118,6 +139,7 @@ fun Home() {
         var selectedDate by remember {
             mutableStateOf(Constants.DefaultSelectedDate)
         }
+
         MaterialDialog(
             dialogState = dateDialogState,
             buttons = {
@@ -163,6 +185,10 @@ fun Home() {
                 startedAt = LocalDateTime.now()
 
                 cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
+
+                runBlocking {
+                    presenter.onDateTimeRegistered(startedAt, deadLine)
+                }
             }
         }
         when (step) {

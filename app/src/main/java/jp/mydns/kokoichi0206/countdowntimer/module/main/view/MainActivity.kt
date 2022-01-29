@@ -1,38 +1,62 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.ExperimentalComposeUiApi
 import jp.mydns.kokoichi0206.countdowntimer.module.main.assembler.MainAssembler
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 
-class MainActivity : ComponentActivity(), MainContract.View {
+open class MainActivity : ComponentActivity(), MainContract.View {
     lateinit var presenter: MainContract.Presenter
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = beginAssembleModules(this)
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                presenter.onCreate()
+            }
+        }
+    }
+
+    @ExperimentalComposeUiApi
+    override fun setMainView() {
         setContent {
             CountDownTimerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Home()
+                    Home(
+                        presenter = presenter,
+                    )
                 }
             }
         }
     }
 
-    override fun onDisassemble() {
-        TODO("Not yet implemented")
+    @ExperimentalComposeUiApi
+    override fun setMainViewWithTime(startedAt: LocalDateTime, deadLine: LocalDateTime) {
+        setContent {
+            CountDownTimerTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    Home(
+                        presenter = presenter,
+                        startedTime = startedAt,
+                        deadline = deadLine,
+                    )
+                }
+            }
+        }
     }
 
     override fun beginAssembleModules(context: Context): MainContract.Presenter {
@@ -41,6 +65,9 @@ class MainActivity : ComponentActivity(), MainContract.View {
     }
 
     override fun beginDisassembleModules() {
-        TODO("Not yet implemented")
+        presenter.disassembleModules()
+    }
+
+    override fun onDisassemble() {
     }
 }

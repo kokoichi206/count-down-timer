@@ -12,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
 @Composable
 fun TitleTextField(
@@ -31,7 +33,8 @@ fun TitleTextField(
             .onFocusChanged {
                 onFocusChanged()
             }
-            .padding(top = 16.dp),
+            .padding(top = 16.dp)
+            .testTag(TestTags.HOME_TITLE),
         value = title,
         placeholder = {
             Text(

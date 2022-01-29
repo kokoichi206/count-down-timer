@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "jp.mydns.kokoichi0206.countdowntimer"
-        minSdk 23
+        minSdk 26
         targetSdk 31
         versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -72,4 +72,7 @@ dependencies {
 
     // Number picker
     implementation "io.github.vanpra.compose-material-dialogs:datetime:0.6.3"
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }
