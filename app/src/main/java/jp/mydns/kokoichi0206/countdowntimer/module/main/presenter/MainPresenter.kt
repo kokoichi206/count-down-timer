@@ -15,7 +15,11 @@ class MainPresenter(
         interactor?.readInitialSettings()
     }
 
-    override suspend fun onDateTimeRegistered(title: String, startedAt: LocalDateTime, deadLine: LocalDateTime) {
+    override suspend fun onDateTimeRegistered(
+        title: String,
+        startedAt: LocalDateTime,
+        deadLine: LocalDateTime
+    ) {
         // ユーザーが時間の登録を終えた時、
         // DBへの書き込みを開始する。
         interactor?.writeStartedAt(startedAt)

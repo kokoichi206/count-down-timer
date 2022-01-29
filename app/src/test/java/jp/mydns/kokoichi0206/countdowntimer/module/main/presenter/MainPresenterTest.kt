@@ -112,6 +112,7 @@ class MainPresenterTest {
     @Test
     fun onReadInitialSettingsCompleted() {
         // Arrange
+        val title = "title"
         val startedAtStr = "1970-01-01 09:00:00"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val startedAt = LocalDateTime.parse(startedAtStr, formatter)
@@ -119,7 +120,7 @@ class MainPresenterTest {
         val deadLine = LocalDateTime.parse(deadLineStr, formatter)
 
         // Act
-        presenter.onReadInitialSettingsCompleted(startedAt, deadLine)
+        presenter.onReadInitialSettingsCompleted(title, startedAt, deadLine)
 
         // Assert
         assertEquals(

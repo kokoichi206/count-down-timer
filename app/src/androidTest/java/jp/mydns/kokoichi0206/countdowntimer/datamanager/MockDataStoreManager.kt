@@ -8,10 +8,10 @@ class MockDataStoreManager(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : DataStoreManager() {
 
-    lateinit var booleanKey: String
-    lateinit var stringKey: String
-    lateinit var stringValue: String
-    lateinit var stringValueDefault: String
+    var booleanKey: String = ""
+    var stringKey: String = ""
+    var stringValue: String = ""
+    var stringValueDefault: String = ""
 
     enum class MockedMethod {
         WRITE_BOOLEAN,

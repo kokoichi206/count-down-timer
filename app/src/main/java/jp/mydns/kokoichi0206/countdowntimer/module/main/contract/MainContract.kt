@@ -17,13 +17,19 @@ class MainContract {
     interface Interactor : jp.mydns.kokoichi0206.viper.Interactor {
         suspend fun readInitialSettings()
 
+        suspend fun writeTitle(title: String)
+
         suspend fun writeStartedAt(startedAt: LocalDateTime)
 
         suspend fun writeDeadline(deadLine: LocalDateTime)
     }
 
     interface InteractorCallback : jp.mydns.kokoichi0206.viper.InteractorCallback {
-        fun onReadInitialSettingsCompleted(startedAt: LocalDateTime, deadLine: LocalDateTime)
+        fun onReadInitialSettingsCompleted(
+            title: String,
+            startedAt: LocalDateTime,
+            deadLine: LocalDateTime
+        )
 
         fun onReadInitialSettingsFailed()
     }
@@ -35,9 +41,11 @@ class MainContract {
         suspend fun onCreate()
 
         suspend fun onDateTimeRegistered(
+            title: String,
             startedAt: LocalDateTime,
             deadLine: LocalDateTime
         )
+
         suspend fun onTitleRegistered(title: String)
     }
 }

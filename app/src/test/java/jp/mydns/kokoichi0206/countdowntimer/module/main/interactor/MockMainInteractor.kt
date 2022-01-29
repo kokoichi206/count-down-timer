@@ -23,6 +23,9 @@ class MockMainInteractor(
         counter.increment(MockedMethod.READ_INITIAL_SETTINGS.name)
     }
 
+    override suspend fun writeTitle(title: String) {
+    }
+
     override suspend fun writeStartedAt(startedAt: LocalDateTime) {
         counter.increment(MockedMethod.WRITE_STARTED_AT.name)
         this.startedAt = startedAt
