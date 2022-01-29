@@ -56,18 +56,20 @@ open class MainInteractor(
     }
 
     override suspend fun writeStartedAt(startedAt: LocalDateTime) {
+        val formatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
         dataStoreManager.writeString(
             context = context,
             key = DataStoreManager.KEY_STARTED_AT,
-            value = startedAt.toString(),
+            value = startedAt.format(formatter),
         )
     }
 
     override suspend fun writeDeadline(deadLine: LocalDateTime) {
+        val formatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
         dataStoreManager.writeString(
             context = context,
             key = DataStoreManager.KEY_DEADLINE,
-            value = deadLine.toString(),
+            value = deadLine.format(formatter),
         )
     }
 

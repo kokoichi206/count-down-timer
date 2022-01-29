@@ -197,7 +197,7 @@ class MainInteractorWithMockTest {
             mockDataStoreManager.getCount(MockDataStoreManager.MockedMethod.WRITE_STRING)
         )
         assertEquals(DataStoreManager.KEY_STARTED_AT, mockDataStoreManager.stringKey)
-        assertEquals(startedAt.toString(), mockDataStoreManager.stringValue)
+        assertEquals(startedAtStr, mockDataStoreManager.stringValue)
     }
 
     @Test
@@ -216,6 +216,6 @@ class MainInteractorWithMockTest {
             mockDataStoreManager.getCount(MockDataStoreManager.MockedMethod.WRITE_STRING)
         )
         assertEquals(DataStoreManager.KEY_DEADLINE, mockDataStoreManager.stringKey)
-        assertEquals(deadline.toString(), mockDataStoreManager.stringValue)
+        assertEquals(deadlineStr, mockDataStoreManager.stringValue)
     }
 }
