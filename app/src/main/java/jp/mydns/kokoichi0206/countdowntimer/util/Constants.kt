@@ -33,4 +33,5 @@ object Constants {
     const val DESCRIPTION_MORE_VERT_ICON = "MoreVert icon"
     const val LICENSE_MENU = "Licenses"
     const val LICENSE_TITLE = "License Information"
+    const val PRIVACY_POLICY_MENU = "Privacy Policy"
 }

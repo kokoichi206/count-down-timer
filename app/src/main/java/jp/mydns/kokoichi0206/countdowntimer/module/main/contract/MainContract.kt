@@ -50,5 +50,7 @@ class MainContract {
         suspend fun onTitleRegistered(title: String)
 
         fun onLicenseClicked()
+
+        fun onPrivacyPolicyClicked()
     }
 }

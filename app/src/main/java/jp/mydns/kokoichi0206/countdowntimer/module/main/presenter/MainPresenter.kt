@@ -39,6 +39,9 @@ class MainPresenter(
         router?.launchLicenseActivity()
     }
 
+    override fun onPrivacyPolicyClicked() {
+    }
+
     override fun onReadInitialSettingsCompleted(
         title: String,
         startedAt: LocalDateTime,
