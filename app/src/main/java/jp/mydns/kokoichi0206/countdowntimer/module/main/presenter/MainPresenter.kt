@@ -40,6 +40,9 @@ class MainPresenter(
     }
 
     override fun onPrivacyPolicyClicked() {
+        // プライバシーポリシーメニューがクリックされた時、
+        // プライバシーポリシー情報を表示させるアクティビティを開始する。
+        router?.launchPrivacyPolicyActivity()
     }
 
     override fun onReadInitialSettingsCompleted(
