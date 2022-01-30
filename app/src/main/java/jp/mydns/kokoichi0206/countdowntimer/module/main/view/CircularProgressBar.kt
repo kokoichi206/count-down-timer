@@ -72,7 +72,7 @@ fun CircularProgressBar(
                 }
                 .testTag(TestTags.HOME_DISPLAYED_TIME),
             text = displayTime,
-            color = Color.White,
+            color = Color.White.copy(alpha = 0.7f),
             fontSize = fontSize,
             fontWeight = FontWeight.Bold
         )

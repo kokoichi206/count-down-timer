@@ -33,6 +33,12 @@ class MainPresenter(
         interactor?.writeTitle(title)
     }
 
+    override fun onLicenseClicked() {
+        // ライセンスメニューがクリックされた時、
+        // ライセンス情報を表示させるアクティビティを開始する。
+        router?.launchLicenseActivity()
+    }
+
     override fun onReadInitialSettingsCompleted(
         title: String,
         startedAt: LocalDateTime,

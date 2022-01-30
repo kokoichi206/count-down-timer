@@ -12,6 +12,8 @@ private val DarkColorPalette = darkColors(
     primaryVariant = Purple700,
     secondary = Color(0xff8cc4cc),
     background = Color(0xFF11130F),
+    onSurface = Color(0xFF445444),
+    surface = Color(0xFF888888),
 )
 
 

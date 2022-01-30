@@ -27,5 +27,10 @@ object Constants {
 
     val TokyoZoneOffset = ZoneOffset.ofHours(+9)
 
-    val TimerInterval = 100L
+    const val TimerInterval = 100L
+
+    // In MoreVert
+    const val DESCRIPTION_MORE_VERT_ICON = "MoreVert icon"
+    const val LICENSE_MENU = "Licenses"
+    const val LICENSE_TITLE = "License Information"
 }

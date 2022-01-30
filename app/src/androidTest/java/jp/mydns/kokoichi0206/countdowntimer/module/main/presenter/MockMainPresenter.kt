@@ -10,6 +10,7 @@ class MockMainPresenter : MainContract.Presenter {
 
     enum class MockedMethod {
         ON_DATE_TIME_REGISTERED,
+        ON_LICENSE_CLICKED,
         DISASSEMBLE_MODULES,
     }
 
@@ -25,6 +26,10 @@ class MockMainPresenter : MainContract.Presenter {
     }
 
     override suspend fun onTitleRegistered(title: String) {
+    }
+
+    override fun onLicenseClicked() {
+        counter.increment(MockedMethod.ON_LICENSE_CLICKED.name)
     }
 
     override fun disassembleModules() {
