@@ -34,6 +34,9 @@ class MainPresenter(
     }
 
     override fun onLicenseClicked() {
+        // ライセンスメニューがクリックされた時、
+        // ライセンス情報を表示させるアクティビティを開始する。
+        router?.launchLicenseActivity()
     }
 
     override fun onReadInitialSettingsCompleted(
