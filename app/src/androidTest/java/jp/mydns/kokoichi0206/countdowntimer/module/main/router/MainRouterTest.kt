@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import jp.mydns.kokoichi0206.countdowntimer.module.main.view.MainActivity
+import jp.mydns.kokoichi0206.countdowntimer.module.menu.view.PrivacyPolicyActivity
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -40,6 +41,23 @@ class MainRouterTest {
 
         // Act
         router.launchLicenseActivity()
+
+        // Assert
+        assertTrue(instrumentationRegistry.checkMonitorHit(monitor, 1))
+    }
+
+    @Test
+    fun launchPrivacyPolicyActivity() {
+        // Arrange
+        val instrumentationRegistry = InstrumentationRegistry.getInstrumentation()
+
+        val monitor =
+            Instrumentation.ActivityMonitor(PrivacyPolicyActivity::class.java.name, null, false)
+        instrumentationRegistry.addMonitor(monitor)
+        assertFalse(instrumentationRegistry.checkMonitorHit(monitor, 1))
+
+        // Act
+        router.launchPrivacyPolicyActivity()
 
         // Assert
         assertTrue(instrumentationRegistry.checkMonitorHit(monitor, 1))
