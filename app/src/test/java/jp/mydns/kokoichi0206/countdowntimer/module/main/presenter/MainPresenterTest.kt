@@ -147,6 +147,20 @@ class MainPresenterTest {
     }
 
     @Test
+    fun onPrivacyPolicyClicked() {
+        // Arrange
+
+        // Act
+        presenter.onPrivacyPolicyClicked()
+
+        // Assert
+        assertEquals(
+            1,
+            mockRouter.getCount(MockMainRouter.MockedMethod.LAUNCH_PRIVACY_POLICY_ACTIVITY)
+        )
+    }
+
+    @Test
     fun onReadInitialSettingsCompleted() {
         // Arrange
         val title = "title"
