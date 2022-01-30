@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,10 +26,7 @@ import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
-import jp.mydns.kokoichi0206.countdowntimer.util.ChangeActionBarColor
-import jp.mydns.kokoichi0206.countdowntimer.util.Constants
-import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
-import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
+import jp.mydns.kokoichi0206.countdowntimer.util.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
@@ -129,7 +127,8 @@ fun Home(
             ) {
                 IconButton(
                     modifier = Modifier
-                        .padding(vertical = 0.dp),
+                        .padding(vertical = 0.dp)
+                        .testTag(TestTags.MORE_VERT_ICON),
                     onClick = {
                         expanded = true
                     }
@@ -149,6 +148,8 @@ fun Home(
                     onDismissRequest = { expanded = false }
                 ) {
                     DropdownMenuItem(
+                        modifier = Modifier
+                            .testTag(TestTags.LICENSE_MENU),
                         onClick = {
                             expanded = false
                             // presenter に通知
