@@ -27,6 +27,9 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.CountDownTimer" />
+        <activity
+            android:name=".module.menu.view.PrivacyPolicyActivity"
+            android:theme="@style/Theme.CountDownTimer" />
     </application>
 
 </manifest>
