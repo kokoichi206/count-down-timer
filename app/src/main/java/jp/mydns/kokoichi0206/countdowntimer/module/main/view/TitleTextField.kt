@@ -20,6 +20,7 @@ import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
 @Composable
 fun TitleTextField(
+    modifier: Modifier = Modifier,
     onFocusChanged: () -> Unit = {},
     title: String,
     placeHolder: String,
@@ -28,7 +29,7 @@ fun TitleTextField(
     onDone: () -> Unit = {},
 ) {
     TextField(
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colors.background)
             .onFocusChanged {
                 onFocusChanged()

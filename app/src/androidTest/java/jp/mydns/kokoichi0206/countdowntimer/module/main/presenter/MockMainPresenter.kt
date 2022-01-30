@@ -27,6 +27,9 @@ class MockMainPresenter : MainContract.Presenter {
     override suspend fun onTitleRegistered(title: String) {
     }
 
+    override fun onLicenseClicked() {
+    }
+
     override fun disassembleModules() {
         counter.increment(MockedMethod.DISASSEMBLE_MODULES.name)
     }

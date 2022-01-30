@@ -1,22 +1,25 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
+import android.content.Intent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
@@ -87,29 +90,80 @@ fun Home(
         val focusManager = LocalFocusManager.current
 
         val titleStyle = TextStyle(
-            color = MaterialTheme.colors.primary,
+            color = Color.White.copy(alpha = 0.7f),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
         )
-        TitleTextField(
-            onFocusChanged = {
-                // FIXME: これをつけないとダイアログが立ち上がってしまう。
-                step = SelectionStep.NONE
-            },
-            title = title.value,
-            placeHolder = Constants.TIMER_TITLE_PLACEHOLDER,
-            onValueChanged = {
-                title.value = it
-            },
-            textStyle = titleStyle,
-            onDone = {
-                focusManager.clearFocus()
 
-                runBlocking {
-                    presenter.onTitleRegistered(title.value)
+        // タイトルとメニューを横に並べている
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            // タイトル入力欄
+            TitleTextField(
+                modifier = Modifier.weight(1f),
+                onFocusChanged = {
+                    // FIXME: これをつけないとダイアログが立ち上がってしまう。
+                    step = SelectionStep.NONE
+                },
+                title = title.value,
+                placeHolder = Constants.TIMER_TITLE_PLACEHOLDER,
+                onValueChanged = {
+                    title.value = it
+                },
+                textStyle = titleStyle,
+                onDone = {
+                    focusManager.clearFocus()
+
+                    runBlocking {
+                        presenter.onTitleRegistered(title.value)
+                    }
+                }
+            )
+
+            // More の三点ボタンのドロップダウンメニュー
+            var expanded by remember { mutableStateOf(false) }
+            Box(
+                modifier = Modifier
+                    .wrapContentSize(Alignment.TopStart)
+            ) {
+                IconButton(
+                    modifier = Modifier
+                        .padding(vertical = 0.dp),
+                    onClick = {
+                        expanded = true
+                    }
+                ) {
+                    Icon(
+                        Icons.Filled.MoreVert,
+                        contentDescription = Constants.DESCRIPTION_MORE_VERT_ICON,
+                        tint = MaterialTheme.colors.surface,
+                    )
+                }
+                DropdownMenu(
+                    modifier = Modifier
+                        .background(MaterialTheme.colors.background)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colors.onSurface),
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        onClick = {
+                            expanded = false
+                            // presenter に通知
+                            presenter.onLicenseClicked()
+                        }
+                    ) {
+                        Text(
+                            text = Constants.LICENSE_MENU,
+                            fontSize = 24.sp,
+                            color = Color.White,
+                        )
+                    }
                 }
             }
-        )
+        }
 
         val strokeWidth = 12.dp
         BoxWithConstraints(

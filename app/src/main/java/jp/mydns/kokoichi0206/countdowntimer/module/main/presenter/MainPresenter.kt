@@ -33,6 +33,9 @@ class MainPresenter(
         interactor?.writeTitle(title)
     }
 
+    override fun onLicenseClicked() {
+    }
+
     override fun onReadInitialSettingsCompleted(
         title: String,
         startedAt: LocalDateTime,
