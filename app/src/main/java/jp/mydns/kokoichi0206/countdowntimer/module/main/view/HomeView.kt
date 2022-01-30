@@ -167,7 +167,7 @@ fun Home(
                     // Privacy Policy menu
                     DropdownMenuItem(
                         modifier = Modifier
-                            .testTag(TestTags.LICENSE_MENU),
+                            .testTag(TestTags.PRIVACY_POLICY_MENU),
                         onClick = {
                             expanded = false
                             // presenter に通知
