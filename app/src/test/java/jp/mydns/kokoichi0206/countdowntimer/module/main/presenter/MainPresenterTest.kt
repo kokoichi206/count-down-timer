@@ -67,6 +67,10 @@ class MainPresenterTest {
         )
         assertEquals(
             0,
+            mockRouter.getCount(MockMainRouter.MockedMethod.LAUNCH_LICENSE_ACTIVITY)
+        )
+        assertEquals(
+            0,
             mockRouter.getCount(MockMainRouter.MockedMethod.ON_DISASSEMBLE)
         )
     }
@@ -125,6 +129,20 @@ class MainPresenterTest {
         assertEquals(
             1,
             mockInteractor.getCount(MockMainInteractor.MockedMethod.WRITE_TITLE)
+        )
+    }
+
+    @Test
+    fun onLicenseClicked() {
+        // Arrange
+
+        // Act
+        presenter.onLicenseClicked()
+
+        // Assert
+        assertEquals(
+            1,
+            mockRouter.getCount(MockMainRouter.MockedMethod.LAUNCH_LICENSE_ACTIVITY)
         )
     }
 

@@ -8,7 +8,12 @@ class MockMainRouter(
 ) : MainContract.Router {
 
     enum class MockedMethod {
+        LAUNCH_LICENSE_ACTIVITY,
         ON_DISASSEMBLE,
+    }
+
+    override fun launchLicenseActivity() {
+        counter.increment(MockedMethod.LAUNCH_LICENSE_ACTIVITY.name)
     }
 
     override fun onDisassemble() {
