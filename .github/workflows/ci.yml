@@ -98,7 +98,8 @@ jobs:
       - name: Set the emulator target name to GITHUB_ENV 
         id: setup_target_name
         run: |
-          target="default"
+          # target="default"
+          target="google_apis"
           if [ "${{ matrix.api-level }}" -ge "29" ]; then
             target="google_apis"
           fi
