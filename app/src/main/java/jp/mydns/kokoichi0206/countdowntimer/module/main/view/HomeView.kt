@@ -147,6 +147,7 @@ fun Home(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
                 ) {
+                    // License menu
                     DropdownMenuItem(
                         modifier = Modifier
                             .testTag(TestTags.LICENSE_MENU),
@@ -158,6 +159,23 @@ fun Home(
                     ) {
                         Text(
                             text = Constants.LICENSE_MENU,
+                            fontSize = 24.sp,
+                            color = Color.White,
+                        )
+                    }
+
+                    // Privacy Policy menu
+                    DropdownMenuItem(
+                        modifier = Modifier
+                            .testTag(TestTags.PRIVACY_POLICY_MENU),
+                        onClick = {
+                            expanded = false
+                            // presenter に通知
+                            presenter.onPrivacyPolicyClicked()
+                        }
+                    ) {
+                        Text(
+                            text = Constants.PRIVACY_POLICY_MENU,
                             fontSize = 24.sp,
                             color = Color.White,
                         )

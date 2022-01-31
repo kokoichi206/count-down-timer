@@ -36,6 +36,8 @@ class MainContract {
 
     interface Router : jp.mydns.kokoichi0206.viper.Router {
         fun launchLicenseActivity()
+
+        fun launchPrivacyPolicyActivity()
     }
 
     interface Presenter : jp.mydns.kokoichi0206.viper.Presenter {
@@ -50,5 +52,7 @@ class MainContract {
         suspend fun onTitleRegistered(title: String)
 
         fun onLicenseClicked()
+
+        fun onPrivacyPolicyClicked()
     }
 }

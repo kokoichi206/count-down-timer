@@ -1,11 +1,13 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import jp.mydns.kokoichi0206.countdowntimer.module.main.presenter.MockMainPresenter
+import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 import junit.framework.Assert.assertEquals
 import org.junit.After
@@ -40,6 +42,7 @@ class MainActivityTest {
     fun initMock() {
         presenter.clear()
         assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_LICENSE_CLICKED))
+        assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_PRIVACY_POLICY_CLICKED))
     }
 
     @Test
@@ -81,6 +84,11 @@ class MainActivityTest {
         composeRule
             .onNodeWithTag(TestTags.LICENSE_MENU)
             .assertExists()
+            .assertTextEquals(Constants.LICENSE_MENU)
+        composeRule
+            .onNodeWithTag(TestTags.PRIVACY_POLICY_MENU)
+            .assertExists()
+            .assertTextEquals(Constants.PRIVACY_POLICY_MENU)
     }
 
     @Test
@@ -100,5 +108,24 @@ class MainActivityTest {
 
         // Assert
         assertEquals(1, presenter.getCount(MockMainPresenter.MockedMethod.ON_LICENSE_CLICKED))
+    }
+
+    @Test
+    fun onPrivacyPolicyClicked() {
+        // Arrange
+        // expand the menu in the more_vert icon
+        composeRule
+            .onNodeWithTag(TestTags.MORE_VERT_ICON)
+            .assertExists()
+            .performClick()
+
+        // Act
+        composeRule
+            .onNodeWithTag(TestTags.PRIVACY_POLICY_MENU)
+            .assertExists()
+            .performClick()
+
+        // Assert
+        assertEquals(1, presenter.getCount(MockMainPresenter.MockedMethod.ON_PRIVACY_POLICY_CLICKED))
     }
 }

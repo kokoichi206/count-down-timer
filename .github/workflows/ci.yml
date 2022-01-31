@@ -98,7 +98,8 @@ jobs:
       - name: Set the emulator target name to GITHUB_ENV 
         id: setup_target_name
         run: |
-          target="default"
+          # target="default"
+          target="google_apis"
           if [ "${{ matrix.api-level }}" -ge "29" ]; then
             target="google_apis"
           fi
@@ -229,9 +230,6 @@ jobs:
           if [ -n "${{ steps.diff-metadata.outputs.diff }}" ]; then
             echo "diff found!!"
             echo "env_is_diff=true" >> $GITHUB_ENV
-            # cat `echo "${{ steps.diff-metadata.outputs.diff }}"` > ./public/diff_metadata
-            # cat `echo "${{ steps.diff-license.outputs.diff }}"` > ./public/diff_license
-            # echo "${{ steps.diff-license.outputs.diff }}" > ./public/diff_license
           else
             echo "diff nooooot found!!"
             echo "env_is_diff=false" >> $GITHUB_ENV
@@ -240,21 +238,45 @@ jobs:
           echo "id_diff check"
           echo ${{ env.env_is_diff }}
 
-          # Preserve results
-          # echo "$diff_meta" > ./public/diff_metadata
-          # echo "$diff_license" > ./public/diff_license
           git checkout ${{ github.repository }}
+
+      - name: Cache for later upload
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./public
+          key: ${{ runner.os }}-public-${{ hashFiles('./public/*') }}
+          restore-keys: |
+            ${{ runner.os }}-public-
+
+  license-upload:
+    runs-on: ubuntu-20.04
+    needs: [ license-checker ]
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+      - name: Restore cache for upload results
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./public
+          key: ${{ runner.os }}-public-${{ hashFiles('./public/*') }}
+          restore-keys: |
+            ${{ runner.os }}-public-
       # Update gh-pages if diff found
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }} && env.env_is_diff == 'true'
+        # メインブランチへの更新かつ、差分がある場合
+        if: ${{ (github.ref == 'refs/heads/main') && (env.env_is_diff == 'true') }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
 
+      # FIXME: 以下の２つはうまく output を分岐させて、１つの step で書きたい
       - name: Outputs when diff found
         uses: actions/github-script@v5
-        if: env.env_is_diff == 'true'
+        # PR かつ、差分がある場合
+        if: ${{ (github.event_name == 'pull_request') && (env.env_is_diff == 'true') }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -283,10 +305,10 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
-
       - name: Outputs when NO diff found
         uses: actions/github-script@v5
-        if: env.env_is_diff == 'false'
+        # PR かつ、差分がない場合
+        if: ${{ (github.event_name == 'pull_request') && (env.env_is_diff == 'false') }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -301,6 +323,7 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
+      # artifact にも保存しておく
       - name: Upload license related files
         uses: actions/upload-artifact@v2
         with:
