@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import androidx.compose.ui.viewinterop.AndroidView
 import jp.mydns.kokoichi0206.countdowntimer.R
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
@@ -31,6 +32,7 @@ fun PrivacyPolicy(context: Context) {
     AndroidView(factory = {
         WebView(context).apply {
             webViewClient = WebViewClient()
+            isDebugInspectorInfoEnabled = false
             loadDataWithBaseURL(null, getPrivacyPolicyString(context), "text/HTML", "UTF-8", null)
         }
     })
