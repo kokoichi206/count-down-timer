@@ -10,6 +10,9 @@ import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のInteractorクラスの単体テスト。
+ */
 class MainInteractorTest {
 
     lateinit var interactor: MainInteractor

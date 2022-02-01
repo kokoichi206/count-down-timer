@@ -12,6 +12,9 @@ import org.junit.Test
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * メイン画面のInteractorクラスの単体テスト。
+ */
 class MainInteractorWithMockTest {
 
     lateinit var interactor: MainInteractorWithMock

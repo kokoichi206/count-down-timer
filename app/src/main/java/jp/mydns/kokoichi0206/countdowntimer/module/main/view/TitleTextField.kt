@@ -18,6 +18,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
+/**
+ * タイマーのタイトルを表すComposable関数。
+ */
 @Composable
 fun TitleTextField(
     modifier: Modifier = Modifier,

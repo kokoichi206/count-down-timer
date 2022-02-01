@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 val Context.settingDataStore: DataStore<Preferences> by preferencesDataStore(name = "timer")
 
 /**
- * Data storage that allows you to store key-value pairs or typed objects.
+ * Data storageのManager。
  */
 open class DataStoreManager {
     /**

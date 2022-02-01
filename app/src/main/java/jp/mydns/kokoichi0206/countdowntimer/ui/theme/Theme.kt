@@ -7,6 +7,9 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+/**
+ * アプリ内で使用するComposable関数のダークモードのテーマ。
+ */
 private val DarkColorPalette = darkColors(
     primary = Color(0xff4cd196),
     primaryVariant = Purple700,
@@ -16,7 +19,9 @@ private val DarkColorPalette = darkColors(
     surface = Color(0xFF888888),
 )
 
-
+/**
+ * アプリ内で使用するComposable関数のテーマ。
+ */
 @Composable
 fun CountDownTimerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

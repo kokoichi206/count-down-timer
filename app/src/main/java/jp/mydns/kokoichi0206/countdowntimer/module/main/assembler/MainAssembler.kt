@@ -7,6 +7,9 @@ import jp.mydns.kokoichi0206.countdowntimer.module.main.interactor.MainInteracto
 import jp.mydns.kokoichi0206.countdowntimer.module.main.presenter.MainPresenter
 import jp.mydns.kokoichi0206.countdowntimer.module.main.router.MainRouter
 
+/**
+ * メイン画面のAssemblerクラス。
+ */
 class MainAssembler : jp.mydns.kokoichi0206.viper.Assembler {
     override fun assembleModules(context: Context): MainContract.Presenter {
         lateinit var presenter: MainPresenter

@@ -8,6 +8,9 @@ import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+/**
+ * 定数を集めたオブジェクト。
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 object Constants {
 

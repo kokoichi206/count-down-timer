@@ -2,8 +2,13 @@ package jp.mydns.kokoichi0206.countdowntimer.module.main.contract
 
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のContractクラス。
+ */
 class MainContract {
-
+    /**
+     * Viewクラスの定義。
+     */
     interface View : jp.mydns.kokoichi0206.viper.View {
         fun setMainView()
 
@@ -14,6 +19,9 @@ class MainContract {
         )
     }
 
+    /**
+     * Interactorクラスの定義。
+     */
     interface Interactor : jp.mydns.kokoichi0206.viper.Interactor {
         suspend fun readInitialSettings()
 
@@ -24,6 +32,9 @@ class MainContract {
         suspend fun writeDeadline(deadLine: LocalDateTime)
     }
 
+    /**
+     * InteractorCallbackクラスの定義。
+     */
     interface InteractorCallback : jp.mydns.kokoichi0206.viper.InteractorCallback {
         fun onReadInitialSettingsCompleted(
             title: String,
@@ -34,12 +45,18 @@ class MainContract {
         fun onReadInitialSettingsFailed()
     }
 
+    /**
+     * Routerクラスの定義。
+     */
     interface Router : jp.mydns.kokoichi0206.viper.Router {
         fun launchLicenseActivity()
 
         fun launchPrivacyPolicyActivity()
     }
 
+    /**
+     * Presenterクラスの定義。
+     */
     interface Presenter : jp.mydns.kokoichi0206.viper.Presenter {
         suspend fun onCreate()
 

@@ -3,6 +3,9 @@ package jp.mydns.kokoichi0206.countdowntimer.module.main.router
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.util.MethodCallCounter
 
+/**
+ * メイン画面のRouterクラスのMock。
+ */
 class MockMainRouter(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : MainContract.Router {

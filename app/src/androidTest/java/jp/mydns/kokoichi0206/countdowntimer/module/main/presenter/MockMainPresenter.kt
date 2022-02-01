@@ -4,6 +4,9 @@ import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.util.MethodCallCounter
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のPresenterクラスのMock。
+ */
 class MockMainPresenter : MainContract.Presenter {
 
     private var counter: MethodCallCounter = MethodCallCounter()
