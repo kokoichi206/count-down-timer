@@ -1,0 +1,10 @@
+name: Build, Test and Deploy
+
+on:
+  push:
+    branches:
+      - 'issue/10'
+
+jobs:
+  create-kdoc:
+    uses: kokoichi206/count-down-timer/.github/workflows/kdoc.yml@135dc8d2fe4c63f81369d2208eeda26a11950a7a
