@@ -1,5 +1,8 @@
 package jp.mydns.kokoichi0206.countdowntimer.util
 
+/**
+ * テストに用いるようのcomposeのタグ。
+ */
 object TestTags {
 
     // Home Screen

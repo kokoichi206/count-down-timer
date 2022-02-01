@@ -14,6 +14,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import jp.mydns.kokoichi0206.countdowntimer.R
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
 
+/**
+ * プライバシーポリシーのActivityクラス。
+ */
 class PrivacyPolicyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,9 @@ class PrivacyPolicyActivity : ComponentActivity() {
     }
 }
 
+/**
+ * プライバシーポリシーを表示するComposable関数。
+ */
 @Composable
 fun PrivacyPolicy(context: Context) {
     AndroidView(factory = {
@@ -38,6 +44,12 @@ fun PrivacyPolicy(context: Context) {
     })
 }
 
+/**
+ * リソースファイルからプライバシーポリシーのHTMLを取得する関数。
+ *
+ * @param[context] コンテキスト。
+ * @return プライバシーポリシー（HTML）をStringにしたもの。
+ */
 fun getPrivacyPolicyString(context: Context): String {
     val asset = context.resources.openRawResource(R.raw.privacy_policy)
     return asset.bufferedReader().use { it.readText() }

@@ -5,6 +5,9 @@ import jp.mydns.kokoichi0206.countdowntimer.datamanager.MockDataStoreManager
 import jp.mydns.kokoichi0206.countdowntimer.util.MethodCallCounter
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のInteractorクラスの単体テスト用クラス。
+ */
 class MainInteractorWithMock(
     var context: Context,
     var mockDataStoreManager: MockDataStoreManager = MockDataStoreManager(),

@@ -12,6 +12,9 @@ import org.junit.Test
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * メイン画面のPresenterクラスの単体テスト。
+ */
 class MainPresenterTest {
 
     lateinit var presenter: MainPresenter

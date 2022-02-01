@@ -5,6 +5,9 @@ import jp.mydns.kokoichi0206.util.MethodCallCounter
 import jp.mydns.kokoichi0206.viper.InteractorCallback
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のInteractorクラスのMock。
+ */
 class MockMainInteractor(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : MainContract.Interactor {

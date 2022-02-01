@@ -13,6 +13,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * メイン画面のRouterクラスの単体テスト。
+ */
 class MainRouterTest {
 
     @get:Rule

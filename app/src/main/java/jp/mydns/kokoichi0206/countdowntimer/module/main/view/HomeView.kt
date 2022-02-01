@@ -1,6 +1,5 @@
 package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,7 +19,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
@@ -31,6 +29,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
+/**
+ * メイン画面を表示するComposable関数。
+ *
+ * ## 以下のComposable関数を使用
+ * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.CircularProgressBar]
+ * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.TitleTextField]
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun Home(
@@ -295,6 +300,9 @@ fun Home(
     ChangeActionBarColor(color = MaterialTheme.colors.background)
 }
 
+/**
+ * メイン画面のタイマーの選択状態を表すenumクラス。
+ */
 enum class SelectionStep(val idx: Int) {
     NONE(0),
     DATE(1),

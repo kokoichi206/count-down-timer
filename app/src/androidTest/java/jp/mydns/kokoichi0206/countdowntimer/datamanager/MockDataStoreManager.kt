@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.datastore.preferences.core.Preferences
 import jp.mydns.kokoichi0206.countdowntimer.util.MethodCallCounter
 
+/**
+ * DataStoreManagerのMock。
+ */
 class MockDataStoreManager(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : DataStoreManager() {

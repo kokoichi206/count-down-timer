@@ -252,9 +252,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-public-
 
-  license-upload:
+  create-kdoc:
+    needs: [ build, local-test, android-emulator-test ]
+    uses: kokoichi206/count-down-timer/.github/workflows/kdoc.yml@135dc8d2fe4c63f81369d2208eeda26a11950a7a
+
+  update-docs:
     runs-on: ubuntu-20.04
-    needs: [ license-checker ]
+    needs: [ license-checker, create-kdoc ]
     steps:
       - name: Check out
         uses: actions/checkout@v2

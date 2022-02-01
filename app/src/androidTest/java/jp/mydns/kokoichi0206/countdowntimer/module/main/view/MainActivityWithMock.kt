@@ -4,6 +4,9 @@ import android.content.Context
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.module.main.presenter.MockMainPresenter
 
+/**
+ * メイン画面のViewクラスの単体テスト用クラス。
+ */
 class MainActivityWithMock : MainActivity() {
 
     private lateinit var mockPresenter: MockMainPresenter

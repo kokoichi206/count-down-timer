@@ -8,19 +8,31 @@ import jp.mydns.kokoichi0206.viper.InteractorCallback
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * メイン画面のInteractorクラス。
+ */
 open class MainInteractor(
     private var context: Context,
     private var dataStoreManager: DataStoreManager = DataStoreManager(),
 ) : MainContract.Interactor {
 
+    /**
+     * InteractorCallbackクラス。
+     */
     lateinit var callback: MainContract.InteractorCallback
 
+    /**
+     * 外からInteractorCallbackを設定する。
+     */
     override fun setInteractorCallback(callback: InteractorCallback) {
         if (callback is MainContract.InteractorCallback) {
             this.callback = callback
         }
     }
 
+    /**
+     * DBから前回保存した値（今回の初期値）を読み取る。
+     */
     override suspend fun readInitialSettings() {
         val title = getTitle()
         val startedAt = getStartedTime()
@@ -32,6 +44,11 @@ open class MainInteractor(
         }
     }
 
+    /**
+     * DBからタイトルを読み取る。
+     *
+     * @return タイトル。
+     */
     open suspend fun getTitle(): String {
         // キーが存在しない場合 ""（空文字）が返ってくる
         return dataStoreManager.readString(
@@ -40,6 +57,11 @@ open class MainInteractor(
         )
     }
 
+    /**
+     * DBからタイトルを読み取る。
+     *
+     * @return タイマーの開始時刻のLocalDataTime。
+     */
     open suspend fun getStartedTime(): LocalDateTime? {
         val startedAtStr = dataStoreManager.readString(
             context = context,
@@ -52,6 +74,11 @@ open class MainInteractor(
         return LocalDateTime.parse(startedAtStr, formatter)
     }
 
+    /**
+     * DBからタイトルを読み取る。
+     *
+     * @return タイマーの終了予定時刻のLocalDataTime。
+     */
     open suspend fun getDeadLine(): LocalDateTime? {
         val deadLineStr = dataStoreManager.readString(
             context = context,
@@ -64,6 +91,9 @@ open class MainInteractor(
         return LocalDateTime.parse(deadLineStr, formatter)
     }
 
+    /**
+     * DBにタイトルを書き込む。
+     */
     override suspend fun writeTitle(title: String) {
         dataStoreManager.writeString(
             context = context,
@@ -72,6 +102,11 @@ open class MainInteractor(
         )
     }
 
+    /**
+     * DBにタイマー開始時刻を書き込む。
+     *
+     * @param[startedAt] 開始時刻のLocalDataTime。
+     */
     override suspend fun writeStartedAt(startedAt: LocalDateTime) {
         val formatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
         dataStoreManager.writeString(
@@ -81,6 +116,11 @@ open class MainInteractor(
         )
     }
 
+    /**
+     * DBにタイマー開始時刻を書き込む。
+     *
+     * @param[deadLine] 終了予定時刻のLocalDataTime。
+     */
     override suspend fun writeDeadline(deadLine: LocalDateTime) {
         val formatter = DateTimeFormatter.ofPattern(Constants.DATETIME_PATTERN)
         dataStoreManager.writeString(

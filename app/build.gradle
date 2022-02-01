@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.android.gms.oss-licenses-plugin'
+    id 'org.jetbrains.dokka'
 }
 
 def versionMajor = 1
@@ -59,6 +60,16 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dokkaHtml.configure {
+    // projectDir は app フォルダのこと
+    outputDirectory.set(new File("${projectDir}/build/dokka"))
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
         }
     }
 }

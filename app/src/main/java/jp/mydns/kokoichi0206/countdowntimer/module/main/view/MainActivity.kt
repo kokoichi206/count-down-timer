@@ -15,7 +15,13 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のViewクラス。
+ */
 open class MainActivity : ComponentActivity(), MainContract.View {
+    /**
+     * presenterクラス。
+     */
     lateinit var presenter: MainContract.Presenter
 
     @ExperimentalComposeUiApi
@@ -29,6 +35,13 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         }
     }
 
+    /**
+     * メイン画面のcompose viewをセットする。
+     *
+     * テーマを設定した上で、以下のComposable関数を表示。
+     *
+     * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.Home]
+     */
     @ExperimentalComposeUiApi
     override fun setMainView() {
         setContent {
@@ -43,6 +56,13 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         }
     }
 
+    /**
+     * メイン画面のcompose viewを初期値付きでセットする。
+     *
+     * テーマを設定した上で、以下のComposable関数を表示。
+     *
+     * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.Home]
+     */
     @ExperimentalComposeUiApi
     override fun setMainViewWithTime(
         title: String,

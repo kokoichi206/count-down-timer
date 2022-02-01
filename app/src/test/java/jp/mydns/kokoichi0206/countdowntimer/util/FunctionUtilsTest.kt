@@ -5,6 +5,9 @@ import org.junit.Test
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * Util関数の単体テスト。
+ */
 class FunctionUtilsTest {
 
     @Test

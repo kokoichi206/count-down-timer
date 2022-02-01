@@ -6,6 +6,9 @@ import jp.mydns.kokoichi0206.util.MethodCallCounter
 import jp.mydns.kokoichi0206.viper.Presenter
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のViewクラスのMock。
+ */
 class MockMainView(
     private val counter: MethodCallCounter = MethodCallCounter()
 ) : MainContract.View {

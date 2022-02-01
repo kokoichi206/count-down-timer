@@ -5,14 +5,33 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import java.time.LocalDateTime
 
+/**
+ * ２つの日時の時間差をミリ秒単位で取得する。
+ *
+ * @param[endDateTime] 終了予定時刻。
+ * @param[startDateTime] 開始時刻。
+ * @return 与えられた２つの日時の時間差。
+ */
 fun milliSecondsBetween2DateTime(endDateTime: LocalDateTime, startDateTime: LocalDateTime): Long {
     return milliSecondsFromLocalDataTime(endDateTime) - milliSecondsFromLocalDataTime(startDateTime)
 }
 
+/**
+ * 日時からUNIX時間へと、ミリ秒単位で変換する。
+ *
+ * @param[dateTime] 時刻。
+ * @return ミリ秒単位でのUNIX時間。
+ */
 fun milliSecondsFromLocalDataTime(dateTime: LocalDateTime): Long {
     return dateTime.atOffset(Constants.TokyoZoneOffset).toInstant().toEpochMilli()
 }
 
+/**
+ * タイマーの中心に表示する文字列。
+ *
+ * @param[milliSeconds] ミリ秒単位での残り時間。
+ * @return 整形された表示するための時間。
+ */
 fun formattedTimeFromMilliSeconds(milliSeconds: Int): String {
     if (milliSeconds < 0) {
         return "00:00:00:000"
@@ -33,6 +52,11 @@ fun formattedTimeFromMilliSeconds(milliSeconds: Int): String {
     }
 }
 
+/**
+ * アクションバーを指定の色に変えるためのComposable関数。
+ *
+ * @param[color] アクションバーの色。
+ */
 @Composable
 fun ChangeActionBarColor(color: Color) {
     // Change ActionBar' color using systemuicontroller.

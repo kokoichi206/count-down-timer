@@ -3,6 +3,9 @@ package jp.mydns.kokoichi0206.countdowntimer.module.main.presenter
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import java.time.LocalDateTime
 
+/**
+ * メイン画面のPresenterクラス。
+ */
 class MainPresenter(
     var view: MainContract.View?,
     var interactor: MainContract.Interactor?,

@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
+/**
+ * タイマー時計を表すComposable関数。
+ */
 @Composable
 fun CircularProgressBar(
     modifier: Modifier = Modifier,
