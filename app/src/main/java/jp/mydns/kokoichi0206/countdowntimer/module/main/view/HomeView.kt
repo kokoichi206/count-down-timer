@@ -283,6 +283,10 @@ fun HomeContent(
                 }
             )
         },
+        onCloseRequest = {
+            dateDialogState.hide()
+            step = SelectionStep.NONE
+        },
     ) {
         datepicker { date ->
             selectedDate = date
@@ -306,7 +310,11 @@ fun HomeContent(
                     step = SelectionStep.NONE
                 }
             )
-        }
+        },
+        onCloseRequest = {
+            dateDialogState.hide()
+            step = SelectionStep.NONE
+        },
     ) {
         timepicker { time ->
             // DataTime setup finished!
