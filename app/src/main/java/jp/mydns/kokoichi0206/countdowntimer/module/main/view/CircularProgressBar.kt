@@ -33,9 +33,10 @@ fun CircularProgressBar(
     radius: Dp = 50.dp,
     color: Color = Color.Green,
     strokeWidth: Dp = 8.dp,
-    animDuration: Int = 1000,
+    animDuration: Int = 100,
     animDelay: Int = 0,
     onNumberClick: () -> Unit = {},
+    needCircleShow: Boolean,
 ) {
     var animationPlayed by remember {
         mutableStateOf(false)
@@ -60,13 +61,19 @@ fun CircularProgressBar(
                 .size(radius * 2f)
                 .testTag(TestTags.HOME_CIRCLE)
         ) {
-            drawArc(
-                color = color,
-                -90f,
-                360 * curPercentage.value,
-                useCenter = false,
-                style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
-            )
+            if (needCircleShow) {
+                drawArc(
+                    color = color,
+                    -90f,
+                    if (curPercentage.value > 0) {
+                        360 * curPercentage.value
+                    } else {
+                        360 * 1f
+                    },
+                    useCenter = false,
+                    style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
+                )
+            }
         }
         Text(
             modifier = Modifier

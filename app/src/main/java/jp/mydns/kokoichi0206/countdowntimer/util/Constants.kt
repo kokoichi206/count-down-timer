@@ -30,7 +30,9 @@ object Constants {
 
     val TokyoZoneOffset = ZoneOffset.ofHours(+9)
 
-    const val TimerInterval = 100L
+    const val TimerInterval = 10L
+    // 終了時刻後からループを継続する時間
+    const val AdditionalTime = -60_000L
 
     // In MoreVert
     const val DESCRIPTION_MORE_VERT_ICON = "MoreVert icon"

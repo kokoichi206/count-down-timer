@@ -94,6 +94,7 @@ fun HomeContent(
     deadline: LocalDateTime? = null,
     isVertical: Boolean = true,
 ) {
+    val primeColor = MaterialTheme.colors.primary
 
     var step by remember {
         mutableStateOf(
@@ -106,7 +107,9 @@ fun HomeContent(
     }
 
     // For backup
-    var startedAt = startedTime ?: LocalDateTime.now()
+    var startedAt by remember {
+        mutableStateOf(startedTime ?: LocalDateTime.now())
+    }
 
     var deadLine by remember {
         mutableStateOf(deadline ?: Constants.DefaultDataTime)
@@ -131,6 +134,15 @@ fun HomeContent(
                 cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
             }
         )
+    }
+
+    // サークルを表示させるかどうか
+    var needCircleShow by remember {
+        mutableStateOf(true)
+    }
+    // Circle bar color
+    var circleColor by remember {
+        mutableStateOf(primeColor)
     }
 
     // initialize
@@ -248,7 +260,7 @@ fun HomeContent(
 
         // タイマーの円
         CircularProgressBar(
-            percentage = if (cTime > 0) {
+            percentage = if (cTime > Constants.AdditionalTime) {
                 percentage
             } else {
                 1f
@@ -256,13 +268,14 @@ fun HomeContent(
             displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
             fontSize = 36.sp,
             radius = boxWithConstraintsScope.maxWidth / 2,
-            color = MaterialTheme.colors.primary,
+            color = circleColor,
             strokeWidth = strokeWidth,
             onNumberClick = {
                 // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
                 step = SelectionStep.NONE
                 step = SelectionStep.DATE
-            }
+            },
+            needCircleShow = needCircleShow,
         )
     }
 
@@ -321,10 +334,11 @@ fun HomeContent(
             selectedTime = time
             step = SelectionStep.DONE
 
+            // 必要な変数を初期化
             deadLine = LocalDateTime.of(selectedDate, selectedTime)
             startedAt = LocalDateTime.now()
-
             cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
+            needCircleShow = true
 
             runBlocking {
                 presenter.onDateTimeRegistered(title.value, startedAt, deadLine)
@@ -340,16 +354,36 @@ fun HomeContent(
         }
         SelectionStep.NONE, SelectionStep.DONE -> {}
     }
+
     // Timer
     LaunchedEffect(key1 = deadLine, key2 = cTime, key3 = isVertical) {
-        if (cTime > 0) {
+        if (cTime > Constants.AdditionalTime) {
             delay(Constants.TimerInterval)
             cTime = milliSecondsBetween2DateTime(deadLine, LocalDateTime.now())
 
             percentage = cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
+
+            circleColor = when {
+                percentage < 1f / 6 -> {
+                    Color.Red
+                }
+                percentage < 3f / 6 -> {
+                    Color.Yellow
+                }
+                else -> {
+                    primeColor
+                }
+            }
+        }
+        // 終了時刻後は、サークルを点灯させる
+        needCircleShow = if (Constants.AdditionalTime < cTime && cTime < 0) {
+            ((cTime / 1000) % 2).toInt() == 0
+        } else {
+            true
         }
     }
 }
+
 
 /**
  * メイン画面のタイマーの選択状態を表すenumクラス。
