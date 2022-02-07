@@ -106,7 +106,9 @@ fun HomeContent(
     }
 
     // For backup
-    var startedAt = startedTime ?: LocalDateTime.now()
+    var startedAt by remember {
+        mutableStateOf(startedTime ?: LocalDateTime.now())
+    }
 
     var deadLine by remember {
         mutableStateOf(deadline ?: Constants.DefaultDataTime)

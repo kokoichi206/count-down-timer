@@ -63,7 +63,11 @@ fun CircularProgressBar(
             drawArc(
                 color = color,
                 -90f,
-                360 * curPercentage.value,
+                    if (curPercentage.value > 0) {
+                        360 * curPercentage.value
+                    } else {
+                        360 * 1f
+                    },
                 useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
