@@ -94,6 +94,7 @@ fun HomeContent(
     deadline: LocalDateTime? = null,
     isVertical: Boolean = true,
 ) {
+    val primeColor = MaterialTheme.colors.primary
 
     var step by remember {
         mutableStateOf(
@@ -133,6 +134,11 @@ fun HomeContent(
                 cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
             }
         )
+    }
+
+    // Circle bar color
+    var circleColor by remember {
+        mutableStateOf(Color.White)
     }
 
     // initialize
@@ -250,7 +256,7 @@ fun HomeContent(
 
         // タイマーの円
         CircularProgressBar(
-            percentage = if (cTime > 0) {
+            percentage = if (cTime > Constants.AdditionalTime) {
                 percentage
             } else {
                 1f
@@ -258,7 +264,7 @@ fun HomeContent(
             displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
             fontSize = 36.sp,
             radius = boxWithConstraintsScope.maxWidth / 2,
-            color = MaterialTheme.colors.primary,
+            color = circleColor,
             strokeWidth = strokeWidth,
             onNumberClick = {
                 // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
@@ -342,16 +348,30 @@ fun HomeContent(
         }
         SelectionStep.NONE, SelectionStep.DONE -> {}
     }
+
     // Timer
     LaunchedEffect(key1 = deadLine, key2 = cTime, key3 = isVertical) {
-        if (cTime > 0) {
+        if (cTime > Constants.AdditionalTime) {
             delay(Constants.TimerInterval)
             cTime = milliSecondsBetween2DateTime(deadLine, LocalDateTime.now())
 
             percentage = cTime.toFloat() / milliSecondsBetween2DateTime(deadLine, startedAt)
+
+            circleColor = when {
+                percentage < 1f / 6 -> {
+                    Color.Red
+                }
+                percentage < 3f / 6 -> {
+                    Color.Yellow
+                }
+                else -> {
+                    primeColor
+                }
+            }
         }
     }
 }
+
 
 /**
  * メイン画面のタイマーの選択状態を表すenumクラス。
