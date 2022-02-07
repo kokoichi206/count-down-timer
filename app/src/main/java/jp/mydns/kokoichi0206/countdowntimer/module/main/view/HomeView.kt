@@ -136,9 +136,13 @@ fun HomeContent(
         )
     }
 
+    // サークルを表示させるかどうか
+    var needCircleShow by remember {
+        mutableStateOf(true)
+    }
     // Circle bar color
     var circleColor by remember {
-        mutableStateOf(Color.White)
+        mutableStateOf(primeColor)
     }
 
     // initialize
@@ -270,7 +274,8 @@ fun HomeContent(
                 // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
                 step = SelectionStep.NONE
                 step = SelectionStep.DATE
-            }
+            },
+            needCircleShow = needCircleShow,
         )
     }
 
@@ -329,10 +334,11 @@ fun HomeContent(
             selectedTime = time
             step = SelectionStep.DONE
 
+            // 必要な変数を初期化
             deadLine = LocalDateTime.of(selectedDate, selectedTime)
             startedAt = LocalDateTime.now()
-
             cTime = milliSecondsBetween2DateTime(deadLine, startedAt)
+            needCircleShow = true
 
             runBlocking {
                 presenter.onDateTimeRegistered(title.value, startedAt, deadLine)
@@ -368,6 +374,12 @@ fun HomeContent(
                     primeColor
                 }
             }
+        }
+        // 終了時刻後は、サークルを点灯させる
+        needCircleShow = if (Constants.AdditionalTime < cTime && cTime < 0) {
+            ((cTime / 1000) % 2).toInt() == 0
+        } else {
+            true
         }
     }
 }
