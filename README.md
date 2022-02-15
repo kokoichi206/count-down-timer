@@ -1,5 +1,6 @@
 # count-down-timer
-[Google Play](https://play.google.com/store/apps/details?id=jp.mydns.kokoichi0206.countdowntimer)
+- [Google Play](https://play.google.com/store/apps/details?id=jp.mydns.kokoichi0206.countdowntimer)
+- [リリースノート](docs/release_note.md)
 
 ## メイン画面
 <img src="docs/imgs/feature.png" width=300>
