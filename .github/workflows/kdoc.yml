@@ -3,10 +3,11 @@ name: Create KDoc
 on:
   workflow_call:
 
+# html形式でのkDocをキャッシュする
 jobs:
   update-kdoc:
     name: Build kdoc
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out
         uses: actions/checkout@v2
@@ -29,7 +30,15 @@ jobs:
           java-version: '11'
       - name: Create HTML by dokka
         run: ./gradlew dokkaHtml
-      - name: Move these HTML to public directory
+      - name: Move these HTML to kdoc directory
         run: |
-          mkdir -p public
-          mv app/build/dokka/ public
+          mkdir -p kdoc
+          mv app/build/dokka/ kdoc
+      - name: Cache for later upload
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./kdoc
+          key: ${{ runner.os }}-kdoc-${{ hashFiles('./kdoc/*') }}
+          restore-keys: |
+            ${{ runner.os }}-kdoc-
