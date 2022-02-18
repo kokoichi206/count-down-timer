@@ -46,7 +46,7 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v2
-      - name: Restore cache for upload results
+      - name: Restore cache for upload license results
         uses: actions/cache@v2
         with:
           path: |
@@ -54,7 +54,7 @@ jobs:
           key: ${{ runner.os }}-public-${{ hashFiles('./public/*') }}
           restore-keys: |
             ${{ runner.os }}-public-
-      - name: Restore cache for upload results
+      - name: Restore cache for upload kdoc results
         uses: actions/cache@v2
         with:
           path: |
@@ -62,11 +62,17 @@ jobs:
           key: ${{ runner.os }}-kdoc-${{ hashFiles('./kdoc/*') }}
           restore-keys: |
             ${{ runner.os }}-kdoc-
-      # Update gh-pages if diff found
+      - name: Move kdoc to public dir
+        run: |
+          mv kdoc public
+      - name: Move index to public dir
+        run: |
+          mv docs/pages/index.html public
+      # Update gh-pages
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         # メインブランチへの更新かつ、差分がある場合
-        if: ${{ (github.ref == 'refs/heads/main') && (needs.license-checker.outputs.is_idff == 'true') }}
+        # if: ${{ (github.ref == 'refs/heads/main') && (needs.license-checker.outputs.is_idff == 'true') }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
