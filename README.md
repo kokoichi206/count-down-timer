@@ -1,4 +1,6 @@
+![](https://img.shields.io/static/v1?label=version&message=1.0.1&color=green)
 # count-down-timer
+
 - [Google Play](https://play.google.com/store/apps/details?id=jp.mydns.kokoichi0206.countdowntimer)
 - [リリースノート](docs/release_note.md)
 
@@ -7,8 +9,14 @@
 
 ## ドキュメント
 
+### kDoc
+[KDoc](https://kokoichi206.github.io/count-down-timer/kdoc/dokka/)
+
 ### クラス仕様
 - [main](docs/class/main.md)
 
-### uml について
-GitHub はデフォルトではレンダリングしてくれないが、[chrome の拡張機能](https://chrome.google.com/webstore/detail/plantuml-visualizer/ffaloebcmkogfdkemcekamlmfkkmgkcf/related?hl=ja&)などを使えば閲覧可能。
+### Third_party License
+[こちら](https://github.com/kokoichi206/count-down-timer/tree/gh-pages)から確認できます。
+
+## License
+"count-down-timer" is under [Apache-2.0 License](LICENSE).

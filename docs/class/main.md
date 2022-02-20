@@ -28,122 +28,58 @@
 
 ## クラス図
 
-``` plantuml
-@startuml
-
-/'
-メソッドなどの各メンバーの記載は省略する
-'/
-namespace jp.mydns.kokoichi0206.viper #CCCCCC {
-    interface View
-    interface Router
-    interface Interactor
-    interface InteractorCallback
-    interface Presenter
-    interface Assembler
-}
-
-package jp.mydns.kokoichi0206.countdowntimer.module.Main {
-    package contract {
-        class MainContract
-        interface View extends jp.mydns.kokoichi0206.viper.View
-        interface Router extends jp.mydns.kokoichi0206.viper.Router
-        interface Interactor extends jp.mydns.kokoichi0206.viper.Interactor
-        interface InteractorCallback extends jp.mydns.kokoichi0206.viper.InteractorCallback
-        interface Presenter extends jp.mydns.kokoichi0206.viper.Presenter
-    }
-
-    package view {
-        class MainActivity #88FF88 implements View
-    }
-
-    package router {
-        class MainRouter #88FF88 implements Router
-    }
-
-    package interactor {
-        class MainInteractor #88FF88 implements Interactor
-    }
-
-    package presenter {
-        class MainPresenter #88FF88 implements Presenter
-    }
-
-    package assembler {
-        class MainAssembler #88FF88 implements jp.mydns.kokoichi0206.viper.Assembler
-    }
-}
-
-package jp.mydns.kokoichi0206.countdowntimer.datamanager {
-    class DataStoreManager
-}
-
-' Contract内にInterfaceを定義
-MainContract +- View
-MainContract +- Router
-MainContract +- Interactor
-MainContract +- InteractorCallback
-MainContract +- Presenter
-
-' VIPERコンポーネントの依存関係
-Presenter <--- MainActivity
-InteractorCallback <--- MainInteractor
-View <--- MainPresenter
-Router <--- MainPresenter
-Interactor <--- MainPresenter
-
-' モジュール組み立て
-MainActivity <.... MainAssembler
-MainRouter <.... MainAssembler
-MainInteractor <.... MainAssembler
-MainPresenter <.... MainAssembler
-
-MainInteractor -> DataStoreManager
-@enduml
-```
+![](imgs/class_main.png)
 
 ## シーケンス図
 
-``` plantuml
-@startuml
+``` mermaid
+%%{init: {'theme': 'forest' } }%%
+sequenceDiagram
+    actor User
+    participant MainActivity as <<View:UI制御>><br />MainActivity
+    participant MainPresenter as <<Presenter:ビジネスロジック>><br />MainPresenter
+    participant MainInteractor as <<Interactor:機能>><br />MainInteractor
+    participant MainRouter as <<Router:画面遷移>><br />MainRouter
 
-actor User
-participant MainActivity <<View:UI制御>>
-participant MainPresenter <<Presenter:ビジネスロジック>>
-participant MainInteractor <<Interactor:機能>>
-participant MainRouter <<Router:画面遷移>>
+    note over User,MainRouter: 画面生成
+    User ->> MainActivity : アプリ起動。
+    MainActivity ->> MainPresenter : onCreate()
+    MainPresenter ->> MainInteractor : readInitialSettings()
+    note right of MainInteractor: DataStoreManager#readString()
+    alt 前データが存在する
+    MainInteractor ->> MainPresenter : onReadInitialSettingsCompleted()
+    else 前データが存在しない
+    MainInteractor ->> MainPresenter : onReadInitialSettingsFailed()
+    end
 
-==画面生成==
-User -> MainActivity : アプリ起動。
-MainActivity -> MainPresenter : onCreate()
-MainPresenter -> MainInteractor : readInitialSettings()
-note right : DataStoreManager#readString()
-alt 前データが存在する
-MainPresenter <-- MainInteractor : onReadInitialSettingsCompleted()
-MainActivity <- MainPresenter : setMainViewWithTime()
-User <- MainActivity : 前回のデータを引き継いだ\nホーム画面を表示する。
-else 前データが存在しない
-MainPresenter <-- MainInteractor : onReadInitialSettingsFailed()
-MainActivity <- MainPresenter : setMainView()
-User <- MainActivity : ホーム画面を表示する。
-end
+    note over User,MainRouter: メニュー表示
+    User ->> MainActivity : 縦三点ボタンをクリック。
+    MainActivity ->> User : メニューを表示させる。
+    opt ライセンス情報
+    User ->> MainActivity : ライセンスメニューをクリック。
+    MainActivity ->> MainPresenter : onLicenseClicked()
+    MainPresenter ->> MainRouter : launchLicenseActivity()
+    MainRouter ->> User : ライセンス画面を表示させる。
+    end
+    opt プライバシーポリシー
+    User ->> MainActivity : プライバシーポリシーメニューをクリック。
+    MainActivity ->> MainPresenter : onPrivacyPolicyClicked()
+    MainPresenter ->> MainRouter : launchPrivacyPolicyActivity()
+    MainRouter ->> User : プライバシーポリシー画面を表示させる。
+    end
+    User ->> MainActivity : メニューの外側をクリック。
+    MainActivity ->> User : メニューを閉じる。
+```
 
-==メニュー表示==
-User -> MainActivity : 縦三点ボタンをクリック。
-User <- MainActivity : メニューを表示させる。
-opt ライセンス情報
-User -> MainActivity : ライセンスメニューをクリック。
-MainActivity -> MainPresenter : onLicenseClicked()
-MainPresenter -> MainRouter : launchLicenseActivity()
-User <- MainRouter : ライセンス画面を表示させる。
-end
-opt プライバシーポリシー
-User -> MainActivity : プライバシーポリシーメニューをクリック。
-MainActivity -> MainPresenter : onPrivacyPolicyClicked()
-MainPresenter -> MainRouter : launchPrivacyPolicyActivity()
-User <- MainRouter : プライバシーポリシー画面を表示させる。
-end
-User -> MainActivity : メニューの外側をクリック。
-User <- MainActivity : メニューを閉じる。
-@enduml
+## 状態遷移図
+
+``` mermaid
+stateDiagram-v2
+    [*] --> 待機中 : アプリ起動
+    待機中 --> 日付選択中: タイマー時間選択箇所\nを押下する
+    日付選択中 --> 待機中: ダイアログを閉じる
+    日付選択中 --> 時間選択中: 日付を選択
+    時間選択中 --> 待機中: ダイアログを閉じる
+    時間選択中 --> タイマー再生中: 時間を選択
+    タイマー再生中 --> 待機中: 時間切れ
 ```
