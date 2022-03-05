@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.ExperimentalComposeUiApi
+import jp.mydns.kokoichi0206.countdowntimer.datamanager.SoundPoolManager
 import jp.mydns.kokoichi0206.countdowntimer.module.main.assembler.MainAssembler
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.ui.theme.CountDownTimerTheme
@@ -24,6 +25,11 @@ open class MainActivity : ComponentActivity(), MainContract.View {
      */
     lateinit var presenter: MainContract.Presenter
 
+    /**
+     * 音源のmanagerクラス。
+     */
+    lateinit var soundPoolManager: SoundPoolManager
+
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +39,7 @@ open class MainActivity : ComponentActivity(), MainContract.View {
                 presenter.onCreate()
             }
         }
+        soundPoolManager = SoundPoolManager(this)
     }
 
     /**
@@ -82,6 +89,10 @@ open class MainActivity : ComponentActivity(), MainContract.View {
                 }
             }
         }
+    }
+
+    override fun playFinishSound() {
+        soundPoolManager.playFinishSound()
     }
 
     override fun beginAssembleModules(context: Context): MainContract.Presenter {

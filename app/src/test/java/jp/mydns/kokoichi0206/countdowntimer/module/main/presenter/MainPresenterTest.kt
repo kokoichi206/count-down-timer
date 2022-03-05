@@ -50,6 +50,10 @@ class MainPresenterTest {
         )
         assertEquals(
             0,
+            mockView.getCount(MockMainView.MockedMethod.PLAY_FINISH_SOUND)
+        )
+        assertEquals(
+            0,
             mockView.getCount(MockMainView.MockedMethod.ON_DISASSEMBLE)
         )
         assertEquals(
@@ -197,6 +201,20 @@ class MainPresenterTest {
         assertEquals(
             1,
             mockView.getCount(MockMainView.MockedMethod.SET_MAIN_VIEW)
+        )
+    }
+
+    @Test
+    fun onFinishTimer() {
+        // Arrange
+
+        // Act
+        presenter.onFinishTimer()
+
+        // Assert
+        assertEquals(
+            1,
+            mockView.getCount(MockMainView.MockedMethod.PLAY_FINISH_SOUND)
         )
     }
 

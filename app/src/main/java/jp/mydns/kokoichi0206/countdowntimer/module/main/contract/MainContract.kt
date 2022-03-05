@@ -17,6 +17,8 @@ class MainContract {
             startedAt: LocalDateTime,
             deadLine: LocalDateTime,
         )
+
+        fun playFinishSound()
     }
 
     /**
@@ -71,5 +73,7 @@ class MainContract {
         fun onLicenseClicked()
 
         fun onPrivacyPolicyClicked()
+
+        fun onFinishTimer()
     }
 }
