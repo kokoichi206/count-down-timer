@@ -64,6 +64,12 @@ class MainPresenter(
         view?.setMainView()
     }
 
+    override fun onFinishTimer() {
+        // タイマーが終了した時、
+        // 終了の音源を鳴らす。
+        view?.playFinishSound()
+    }
+
     override fun disassembleModules() {
         view?.let {
             it.onDisassemble()

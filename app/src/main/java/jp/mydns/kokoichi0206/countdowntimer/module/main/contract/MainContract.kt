@@ -73,5 +73,7 @@ class MainContract {
         fun onLicenseClicked()
 
         fun onPrivacyPolicyClicked()
+
+        fun onFinishTimer()
     }
 }
