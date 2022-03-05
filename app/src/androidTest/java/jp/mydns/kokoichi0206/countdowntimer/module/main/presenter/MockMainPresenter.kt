@@ -40,6 +40,9 @@ class MockMainPresenter : MainContract.Presenter {
         counter.increment(MockedMethod.ON_PRIVACY_POLICY_CLICKED.name)
     }
 
+    override fun onFinishTimer() {
+    }
+
     override fun disassembleModules() {
         counter.increment(MockedMethod.DISASSEMBLE_MODULES.name)
     }

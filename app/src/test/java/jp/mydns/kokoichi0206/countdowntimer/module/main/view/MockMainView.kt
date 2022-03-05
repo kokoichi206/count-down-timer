@@ -20,6 +20,7 @@ class MockMainView(
     enum class MockedMethod {
         SET_MAIN_VIEW,
         SET_MAIN_VIEW_WITH_TIME,
+        PLAY_FINISH_SOUND,
         ON_DISASSEMBLE,
     }
 
@@ -36,6 +37,10 @@ class MockMainView(
         this.title = title
         this.startedAt = startedAt
         this.deadLine = deadLine
+    }
+
+    override fun playFinishSound() {
+        counter.increment(MockedMethod.PLAY_FINISH_SOUND.name)
     }
 
     override fun onDisassemble() {
