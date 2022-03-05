@@ -17,6 +17,8 @@ class MainContract {
             startedAt: LocalDateTime,
             deadLine: LocalDateTime,
         )
+
+        fun playFinishSound()
     }
 
     /**

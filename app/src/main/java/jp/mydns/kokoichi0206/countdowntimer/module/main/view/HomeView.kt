@@ -96,6 +96,8 @@ fun HomeContent(
 ) {
     val primeColor = MaterialTheme.colors.primary
 
+    var isPlaying by remember { mutableStateOf(false) }
+
     var step by remember {
         mutableStateOf(
             SelectionStep.NONE
@@ -373,6 +375,15 @@ fun HomeContent(
                 else -> {
                     primeColor
                 }
+            }
+        }
+        // 初めてタイマーが0以下になった時、presenter.onFinishTimer()を呼び出す。
+        if (cTime > 0) {
+            isPlaying = true
+        } else if (cTime < 0) {
+            if (isPlaying) {
+                isPlaying = false
+                presenter.onFinishTimer()
             }
         }
         // 終了時刻後は、サークルを点灯させる
