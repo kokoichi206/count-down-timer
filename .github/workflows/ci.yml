@@ -33,7 +33,7 @@ jobs:
 
   create-release:
     needs: [ build, local-test, android-emulator-test ]
-    uses: kokoichi206/count-down-timer/.github/workflows/create-release.yml@98c9af3081124ff2152f00fd793c7851163fcfab
+    uses: kokoichi206/count-down-timer/.github/workflows/create-release.yml@da0fe32dfa10cc492d1c245193f8b8b7e1ebba1e
 
   license-checker:
     needs: [ build, local-test, android-emulator-test ]
