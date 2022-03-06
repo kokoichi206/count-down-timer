@@ -39,6 +39,6 @@ jobs:
         with:
           path: |
             ./kdoc
-          key: ${{ runner.os }}-kdoc-${{ hashFiles('./kdoc/*') }}
+          key: ${{ runner.os }}-kdoc-${{ hashFiles('./app/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-kdoc-
