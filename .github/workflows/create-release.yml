@@ -81,7 +81,7 @@ jobs:
           fi
 
       - name: Add tag
-        if: ${{ steps.is-release-need.outputs.need == 'false' }}
+        if: ${{ steps.is-release-need.outputs.need == 'true' }}
         run: |
           git config --local user.email "${GITHUB_ACTOR}@from.github.actions" || echo "No changes to commit"
           git config --local user.name "${GITHUB_ACTOR}" || echo "No changes to commit"
@@ -99,7 +99,7 @@ jobs:
           fi
 
       - name: Create Body
-        if: ${{ steps.is-release-need.outputs.need == 'false' }}
+        if: ${{ steps.is-release-need.outputs.need == 'true' }}
         id: create-body
         run: |
           feature=()
@@ -141,7 +141,7 @@ jobs:
           echo "::set-output name=body::$(echo ${body})"
 
       - name: Create release-notes
-        if: ${{ steps.is-release-need.outputs.need == 'false' }}
+        if: ${{ steps.is-release-need.outputs.need == 'true' }}
         run: |
           owner_repo="${{ github.repository }}" # owner/repo
           tag_name="${{ steps.version-head-ref.outputs.full }}"
