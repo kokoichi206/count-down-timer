@@ -3,29 +3,19 @@ package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
+import jp.mydns.kokoichi0206.countdowntimer.module.main.view.components.HomeViewContent
 import jp.mydns.kokoichi0206.countdowntimer.util.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -54,46 +44,9 @@ fun Home(
     }
     isVertical = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(paddingLarge),
-    ) {
-        // 縦画面ならそのまま表示する
-        if (isVertical) {
-            HomeContent(
-                presenter = presenter,
-                initialTitle = initialTitle,
-                startedTime = startedTime,
-                deadline = deadline,
-                isVertical = isVertical,
-            )
-        } else {
-            // 横画面なら横並びに表示させる
-            Row() {
-                HomeContent(
-                    presenter = presenter,
-                    initialTitle = initialTitle,
-                    startedTime = startedTime,
-                    deadline = deadline,
-                    isVertical = isVertical,
-                )
-            }
-        }
-    }
     // Change ActionBar color
     ChangeActionBarColor(color = MaterialTheme.colors.background)
-}
 
-@Composable
-fun HomeContent(
-    presenter: MainContract.Presenter,
-    initialTitle: String? = null,
-    startedTime: LocalDateTime? = null,
-    deadline: LocalDateTime? = null,
-    isVertical: Boolean = true,
-) {
     val primeColor = MaterialTheme.colors.primary
 
     var isPlaying by remember { mutableStateOf(false) }
@@ -152,134 +105,94 @@ fun HomeContent(
         step = SelectionStep.DONE
     }
 
-    val focusManager = LocalFocusManager.current
 
-    val titleStyle = TextStyle(
-        color = Color.White.copy(alpha = 0.7f),
-        fontSize = 30.sp,
-        fontWeight = FontWeight.Bold,
-    )
-
-    // タイトルとメニューを横に並べている
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .padding(paddingLarge),
     ) {
-        // タイトル入力欄
-        TitleTextField(
-            onFocusChanged = {
-                // FIXME: これをつけないとダイアログが立ち上がってしまう。
-                step = SelectionStep.NONE
-            },
-            title = title.value,
-            placeHolder = Constants.TIMER_TITLE_PLACEHOLDER,
-            onValueChanged = {
-                title.value = it
-            },
-            textStyle = titleStyle,
-            onDone = {
-                focusManager.clearFocus()
-
-                runBlocking {
-                    presenter.onTitleRegistered(title.value)
-                }
-            }
-        )
-
-        // More の三点ボタンのドロップダウンメニュー
-        var expanded by remember { mutableStateOf(false) }
-        Box(
-            modifier = Modifier
-                .wrapContentSize(Alignment.TopStart)
-        ) {
-            IconButton(
-                modifier = Modifier
-                    .padding(vertical = 0.dp)
-                    .testTag(TestTags.MORE_VERT_ICON),
-                onClick = {
-                    expanded = true
-                }
-            ) {
-                Icon(
-                    Icons.Filled.MoreVert,
-                    contentDescription = Constants.DESCRIPTION_MORE_VERT_ICON,
-                    tint = MaterialTheme.colors.surface,
-                )
-            }
-            DropdownMenu(
-                modifier = Modifier
-                    .background(MaterialTheme.colors.background)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colors.onSurface),
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                // License menu
-                DropdownMenuItem(
-                    modifier = Modifier
-                        .testTag(TestTags.LICENSE_MENU),
-                    onClick = {
-                        expanded = false
+        // 縦画面ならそのまま表示する
+        if (isVertical) {
+            HomeViewContent(
+                title = title.value,
+                onTitleFocusChanged = {
+                    // FIXME: これをつけないとダイアログが立ち上がってしまう。
+                    step = SelectionStep.NONE
+                },
+                onTitleValueChanged = {
+                    title.value = it
+                },
+                onTitleDone = {
+                    runBlocking {
+                        presenter.onTitleRegistered(title.value)
+                    }
+                },
+                onLicenseMenuClick = {
+                    // presenter に通知
+                    presenter.onLicenseClicked()
+                },
+                onPrivacyPolicyMenuClick = {
+                    // presenter に通知
+                    presenter.onPrivacyPolicyClicked()
+                },
+                circlePercentage = if (cTime > Constants.AdditionalTime) {
+                    percentage
+                } else {
+                    1f
+                },
+                circleDisplayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
+                circleColor = circleColor,
+                onCircleNumberClick = {
+                    // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
+                    step = SelectionStep.NONE
+                    step = SelectionStep.DATE
+                },
+                needCircleShow = needCircleShow,
+            )
+        } else {
+            // 横画面なら横並びに表示させる
+            Row() {
+                HomeViewContent(
+                    title = title.value,
+                    onTitleFocusChanged = {
+                        // FIXME: これをつけないとダイアログが立ち上がってしまう。
+                        step = SelectionStep.NONE
+                    },
+                    onTitleValueChanged = {
+                        title.value = it
+                    },
+                    onTitleDone = {
+                        runBlocking {
+                            presenter.onTitleRegistered(title.value)
+                        }
+                    },
+                    onLicenseMenuClick = {
                         // presenter に通知
                         presenter.onLicenseClicked()
-                    }
-                ) {
-                    Text(
-                        text = Constants.LICENSE_MENU,
-                        fontSize = 24.sp,
-                        color = Color.White,
-                    )
-                }
-
-                // Privacy Policy menu
-                DropdownMenuItem(
-                    modifier = Modifier
-                        .testTag(TestTags.PRIVACY_POLICY_MENU),
-                    onClick = {
-                        expanded = false
+                    },
+                    onPrivacyPolicyMenuClick = {
                         // presenter に通知
                         presenter.onPrivacyPolicyClicked()
-                    }
-                ) {
-                    Text(
-                        text = Constants.PRIVACY_POLICY_MENU,
-                        fontSize = 24.sp,
-                        color = Color.White,
-                    )
-                }
+                    },
+                    circlePercentage = if (cTime > Constants.AdditionalTime) {
+                        percentage
+                    } else {
+                        1f
+                    },
+                    circleDisplayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
+                    circleColor = circleColor,
+                    onCircleNumberClick = {
+                        // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
+                        step = SelectionStep.NONE
+                        step = SelectionStep.DATE
+                    },
+                    needCircleShow = needCircleShow,
+                )
             }
         }
     }
 
-    val strokeWidth = 12.dp
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(shape = RectangleShape)
-            .padding(strokeWidth / 2),
-        contentAlignment = Alignment.Center,
-    ) {
-        val boxWithConstraintsScope = this
-
-        // タイマーの円
-        CircularProgressBar(
-            percentage = if (cTime > Constants.AdditionalTime) {
-                percentage
-            } else {
-                1f
-            },
-            displayTime = formattedTimeFromMilliSeconds(cTime.toInt()),
-            fontSize = 36.sp,
-            radius = boxWithConstraintsScope.maxWidth / 2,
-            color = circleColor,
-            strokeWidth = strokeWidth,
-            onNumberClick = {
-                // FIXME: 更新を通知するために無理矢理 NONE を挟んでいる
-                step = SelectionStep.NONE
-                step = SelectionStep.DATE
-            },
-            needCircleShow = needCircleShow,
-        )
-    }
 
     // Date picker dialog
     val dateDialogState = rememberMaterialDialogState()
