@@ -37,11 +37,11 @@ jobs:
 
   license-checker:
     needs: [ build, local-test, android-emulator-test ]
-    uses: kokoichi206/count-down-timer/.github/workflows/license.yml@2ff30e9e3cd45946ced2c3c1bf3dd238d7f5d1dd  
+    uses: kokoichi206/count-down-timer/.github/workflows/license.yml@1c790072d8f0eac2f01d85aad8e69e87ee5067da  
 
   create-kdoc:
     needs: [ build, local-test, android-emulator-test ]
-    uses: kokoichi206/count-down-timer/.github/workflows/kdoc.yml@bb0914bc8dc4b90b59e984574522538f70cd3578
+    uses: kokoichi206/count-down-timer/.github/workflows/kdoc.yml@1c790072d8f0eac2f01d85aad8e69e87ee5067da
 
   update-docs:
     runs-on: ubuntu-20.04
@@ -54,7 +54,7 @@ jobs:
         with:
           path: |
             ./public
-          key: ${{ runner.os }}-public-${{ hashFiles('./public/*') }}
+          key: ${{ runner.os }}-public-${{ hashFiles('./app/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-public-
       - name: Restore cache for upload kdoc results
@@ -62,14 +62,17 @@ jobs:
         with:
           path: |
             ./kdoc
-          key: ${{ runner.os }}-kdoc-${{ hashFiles('./kdoc/*') }}
+          key: ${{ runner.os }}-kdoc-${{ hashFiles('./app/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-kdoc-
       - name: Move kdoc to public dir
         run: |
-          mv kdoc public
+          # override the existing kdoc dir
+          rm -rf public/kdoc
+          mv -f kdoc public
       - name: Move index to public dir
         run: |
+          rm public/index.html
           mv docs/pages/index.html public
       # Update gh-pages
       - name: Deploy
