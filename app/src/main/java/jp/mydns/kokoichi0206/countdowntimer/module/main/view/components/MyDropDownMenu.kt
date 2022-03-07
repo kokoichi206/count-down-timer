@@ -73,7 +73,7 @@ fun MyDropDownMenu(
             // ポモドーロタイマー画面
             DropdownMenuItem(
                 modifier = Modifier
-                    .testTag(TestTags.POMODORO),
+                    .testTag(TestTags.POMODORO_MENU),
                 onClick = {
                     expanded = false
                     onPomodoroMenuClick()

@@ -18,6 +18,8 @@ class MainContract {
             deadLine: LocalDateTime,
         )
 
+        fun setPomodoroView()
+
         fun playFinishSound()
     }
 
