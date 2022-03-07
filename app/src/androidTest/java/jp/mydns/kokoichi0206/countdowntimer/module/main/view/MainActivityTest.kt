@@ -44,6 +44,8 @@ class MainActivityTest {
 
     fun initMock() {
         presenter.clear()
+        assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_HOME_MENU_CLICKED))
+        assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_POMODORO_MENU_CLICKED))
         assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_LICENSE_CLICKED))
         assertEquals(0, presenter.getCount(MockMainPresenter.MockedMethod.ON_PRIVACY_POLICY_CLICKED))
     }
@@ -100,6 +102,44 @@ class MainActivityTest {
             .onNodeWithTag(TestTags.PRIVACY_POLICY_MENU)
             .assertExists()
             .assertTextEquals(Constants.PRIVACY_POLICY_MENU)
+    }
+
+    @Test
+    fun onHomeMenuClicked() {
+        // Arrange
+        // expand the menu in the more_vert icon
+        composeRule
+            .onNodeWithTag(TestTags.MORE_VERT_ICON)
+            .assertExists()
+            .performClick()
+
+        // Act
+        composeRule
+            .onNodeWithTag(TestTags.HOME_MENU)
+            .assertExists()
+            .performClick()
+
+        // Assert
+        assertEquals(1, presenter.getCount(MockMainPresenter.MockedMethod.ON_HOME_MENU_CLICKED))
+    }
+
+    @Test
+    fun onPomodoroMenuClicked() {
+        // Arrange
+        // expand the menu in the more_vert icon
+        composeRule
+            .onNodeWithTag(TestTags.MORE_VERT_ICON)
+            .assertExists()
+            .performClick()
+
+        // Act
+        composeRule
+            .onNodeWithTag(TestTags.POMODORO_MENU)
+            .assertExists()
+            .performClick()
+
+        // Assert
+        assertEquals(1, presenter.getCount(MockMainPresenter.MockedMethod.ON_POMODORO_MENU_CLICKED))
     }
 
     @Test
