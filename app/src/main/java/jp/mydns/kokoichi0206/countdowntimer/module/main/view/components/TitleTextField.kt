@@ -1,4 +1,4 @@
-package jp.mydns.kokoichi0206.countdowntimer.module.main.view
+package jp.mydns.kokoichi0206.countdowntimer.module.main.view.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -12,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
 /**
@@ -28,9 +31,16 @@ fun TitleTextField(
     title: String,
     placeHolder: String,
     onValueChanged: (String) -> Unit = {},
-    textStyle: TextStyle = TextStyle(),
     onDone: () -> Unit = {},
 ) {
+    val focusManager = LocalFocusManager.current
+
+    val titleStyle = TextStyle(
+        color = Color.White.copy(alpha = 0.7f),
+        fontSize = 30.sp,
+        fontWeight = FontWeight.Bold,
+    )
+
     TextField(
         modifier = modifier
             .background(MaterialTheme.colors.background)
@@ -43,13 +53,13 @@ fun TitleTextField(
         placeholder = {
             Text(
                 text = placeHolder,
-                style = textStyle,
+                style = titleStyle,
             )
         },
         onValueChange = {
             onValueChanged(it)
         },
-        textStyle = textStyle,
+        textStyle = titleStyle,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = MaterialTheme.colors.background,
             unfocusedIndicatorColor = Color.Transparent,
@@ -57,6 +67,7 @@ fun TitleTextField(
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(
             onDone = {
+                focusManager.clearFocus()
                 onDone()
             },
         ),

@@ -91,6 +91,27 @@ open class MainActivity : ComponentActivity(), MainContract.View {
         }
     }
 
+    /**
+     * ポモドーロタイマー画面のcompose viewをセットする。
+     *
+     * テーマを設定した上で、以下のComposable関数を表示。
+     *
+     * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.PomodoroView]
+     */
+    @ExperimentalComposeUiApi
+    override fun setPomodoroView() {
+        setContent {
+            CountDownTimerTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    PomodoroView(
+                        presenter = presenter,
+                    )
+                }
+            }
+        }
+    }
+
     override fun playFinishSound() {
         soundPoolManager.playFinishSound()
     }

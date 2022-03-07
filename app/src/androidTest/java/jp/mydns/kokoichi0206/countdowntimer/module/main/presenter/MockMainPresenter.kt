@@ -13,6 +13,8 @@ class MockMainPresenter : MainContract.Presenter {
 
     enum class MockedMethod {
         ON_DATE_TIME_REGISTERED,
+        ON_HOME_MENU_CLICKED,
+        ON_POMODORO_MENU_CLICKED,
         ON_LICENSE_CLICKED,
         ON_PRIVACY_POLICY_CLICKED,
         DISASSEMBLE_MODULES,
@@ -30,6 +32,14 @@ class MockMainPresenter : MainContract.Presenter {
     }
 
     override suspend fun onTitleRegistered(title: String) {
+    }
+
+    override suspend fun onHomeMenuClicked() {
+        counter.increment(MockedMethod.ON_HOME_MENU_CLICKED.name)
+    }
+
+    override fun onPomodoroMenuClicked() {
+        counter.increment(MockedMethod.ON_POMODORO_MENU_CLICKED.name)
     }
 
     override fun onLicenseClicked() {

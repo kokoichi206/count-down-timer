@@ -36,6 +36,18 @@ class MainPresenter(
         interactor?.writeTitle(title)
     }
 
+    override suspend fun onHomeMenuClicked() {
+        // ホーム画面メニューがクリックされた時、
+        // DBに前回の設定がないか読み込みを開始する。
+        interactor?.readInitialSettings()
+    }
+
+    override fun onPomodoroMenuClicked() {
+        // ポモドーロ画面メニューがクリックされた時、
+        // ポモドーロ画面を表示する。
+        view?.setPomodoroView()
+    }
+
     override fun onLicenseClicked() {
         // ライセンスメニューがクリックされた時、
         // ライセンス情報を表示させるアクティビティを開始する。

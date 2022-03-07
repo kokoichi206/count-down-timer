@@ -36,7 +36,15 @@ object Constants {
 
     // In MoreVert
     const val DESCRIPTION_MORE_VERT_ICON = "MoreVert icon"
+    const val HOME_MENU = "ホーム"
+    const val POMODORO_MENU = "ポモドーロ"
     const val LICENSE_MENU = "Licenses"
     const val LICENSE_TITLE = "License Information"
     const val PRIVACY_POLICY_MENU = "Privacy Policy"
+
+    // Pomodoro
+    const val POMODORO_TITLE_WORKING = "作業中"
+    const val POMODORO_TITLE_RESTING = "休憩中"
+    const val POMODORO_WORK_TIME_MILLI_SECONDS = 25 * 60 * 1000L
+    const val POMODORO_REST_TIME_MILLI_SECONDS = 5 * 60 * 1000L
 }

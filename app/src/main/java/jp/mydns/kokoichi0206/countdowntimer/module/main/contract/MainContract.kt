@@ -18,6 +18,8 @@ class MainContract {
             deadLine: LocalDateTime,
         )
 
+        fun setPomodoroView()
+
         fun playFinishSound()
     }
 
@@ -69,6 +71,10 @@ class MainContract {
         )
 
         suspend fun onTitleRegistered(title: String)
+
+        suspend fun onHomeMenuClicked()
+
+        fun onPomodoroMenuClicked()
 
         fun onLicenseClicked()
 

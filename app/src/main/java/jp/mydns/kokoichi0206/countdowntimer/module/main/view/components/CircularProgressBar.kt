@@ -1,4 +1,4 @@
-package jp.mydns.kokoichi0206.countdowntimer.module.main.view
+package jp.mydns.kokoichi0206.countdowntimer.module.main.view.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

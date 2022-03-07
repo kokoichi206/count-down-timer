@@ -20,6 +20,7 @@ class MockMainView(
     enum class MockedMethod {
         SET_MAIN_VIEW,
         SET_MAIN_VIEW_WITH_TIME,
+        SET_POMODORO_VIEW,
         PLAY_FINISH_SOUND,
         ON_DISASSEMBLE,
     }
@@ -37,6 +38,10 @@ class MockMainView(
         this.title = title
         this.startedAt = startedAt
         this.deadLine = deadLine
+    }
+
+    override fun setPomodoroView() {
+        counter.increment(MockedMethod.SET_POMODORO_VIEW.name)
     }
 
     override fun playFinishSound() {

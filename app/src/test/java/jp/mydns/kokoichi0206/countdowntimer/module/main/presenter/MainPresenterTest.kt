@@ -140,6 +140,34 @@ class MainPresenterTest {
     }
 
     @Test
+    fun onHomeMenuClicked() = runBlocking {
+        // Arrange
+
+        // Act
+        presenter.onHomeMenuClicked()
+
+        // Assert
+        assertEquals(
+            1,
+            mockInteractor.getCount(MockMainInteractor.MockedMethod.READ_INITIAL_SETTINGS)
+        )
+    }
+
+    @Test
+    fun onPomodoroMenuClicked() {
+        // Arrange
+
+        // Act
+        presenter.onPomodoroMenuClicked()
+
+        // Assert
+        assertEquals(
+            1,
+            mockView.getCount(MockMainView.MockedMethod.SET_POMODORO_VIEW)
+        )
+    }
+
+    @Test
     fun onLicenseClicked() {
         // Arrange
 

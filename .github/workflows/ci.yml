@@ -67,12 +67,15 @@ jobs:
             ${{ runner.os }}-kdoc-
       - name: Move kdoc to public dir
         run: |
-          # override the existing kdoc dir
-          rm -rf public/kdoc
-          mv -f kdoc public
+          if [ -d public/kdoc ]; then
+            rm -rf public/kdoc
+          fi
+          mv kdoc public
       - name: Move index to public dir
         run: |
-          rm public/index.html
+          if [ -e public/index.html ]; then
+            rm public/index.html
+          fi
           mv docs/pages/index.html public
       # Update gh-pages
       - name: Deploy
