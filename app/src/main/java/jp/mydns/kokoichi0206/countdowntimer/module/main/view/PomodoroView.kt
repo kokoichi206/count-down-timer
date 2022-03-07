@@ -19,6 +19,7 @@ import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
 import jp.mydns.kokoichi0206.countdowntimer.util.minAndSecDisplayTime
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
 
 /**
@@ -28,8 +29,6 @@ import java.time.LocalDateTime
 @Composable
 fun PomodoroView(
     presenter: MainContract.Presenter,
-    initialTitle: String? = null,
-    startedTime: LocalDateTime? = null,
     deadline: LocalDateTime? = null,
 ) {
 
@@ -89,6 +88,14 @@ fun PomodoroView(
                 } else {
                     Constants.POMODORO_TITLE_RESTING
                 },
+                onHomeMenuClick = {
+                    runBlocking {
+                        presenter.onHomeMenuClicked()
+                    }
+                },
+                onPomodoroMenuClick = {
+                    presenter.onPomodoroMenuClicked()
+                },
                 onLicenseMenuClick = {
                     // presenter に通知
                     presenter.onLicenseClicked()
@@ -120,6 +127,14 @@ fun PomodoroView(
                         Constants.POMODORO_TITLE_WORKING
                     } else {
                         Constants.POMODORO_TITLE_RESTING
+                    },
+                    onHomeMenuClick = {
+                        runBlocking {
+                            presenter.onHomeMenuClicked()
+                        }
+                    },
+                    onPomodoroMenuClick = {
+                        presenter.onPomodoroMenuClicked()
                     },
                     onLicenseMenuClick = {
                         // presenter に通知

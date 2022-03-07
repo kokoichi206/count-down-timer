@@ -18,6 +18,8 @@ fun HomeViewContent(
     onTitleFocusChanged: () -> Unit = {},
     onTitleValueChanged: (String) -> Unit = {},
     onTitleDone: () -> Unit = {},
+    onHomeMenuClick: () -> Unit = {},
+    onPomodoroMenuClick: () -> Unit = {},
     onLicenseMenuClick: () -> Unit = {},
     onPrivacyPolicyMenuClick: () -> Unit = {},
     circlePercentage: Float,
@@ -46,10 +48,10 @@ fun HomeViewContent(
 
         MyDropDownMenu(
             onHomeMenuClick = {
-
+                onHomeMenuClick()
             },
             onPomodoroMenuClick = {
-
+                onPomodoroMenuClick()
             },
             onLicenseMenuClick = {
                 onLicenseMenuClick()

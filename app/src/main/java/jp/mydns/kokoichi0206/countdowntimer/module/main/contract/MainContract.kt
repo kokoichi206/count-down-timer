@@ -72,6 +72,10 @@ class MainContract {
 
         suspend fun onTitleRegistered(title: String)
 
+        suspend fun onHomeMenuClicked()
+
+        fun onPomodoroMenuClicked()
+
         fun onLicenseClicked()
 
         fun onPrivacyPolicyClicked()

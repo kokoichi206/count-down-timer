@@ -16,6 +16,8 @@ fun PomodoroViewContent(
     titleModifier: Modifier = Modifier,
     circleModifier: Modifier = Modifier,
     title: String,
+    onHomeMenuClick: () -> Unit = {},
+    onPomodoroMenuClick: () -> Unit = {},
     onLicenseMenuClick: () -> Unit = {},
     onPrivacyPolicyMenuClick: () -> Unit = {},
     circlePercentage: Float,
@@ -38,10 +40,10 @@ fun PomodoroViewContent(
 
         MyDropDownMenu(
             onHomeMenuClick = {
-
+                onHomeMenuClick()
             },
             onPomodoroMenuClick = {
-
+                onPomodoroMenuClick()
             },
             onLicenseMenuClick = {
                 onLicenseMenuClick()

@@ -25,8 +25,8 @@ import java.time.LocalDateTime
  * メイン画面を表示するComposable関数。
  *
  * ## 以下のComposable関数を使用
- * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.CircularProgressBar]
- * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.TitleTextField]
+ * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.components.CircularProgressBar]
+ * * [jp.mydns.kokoichi0206.countdowntimer.module.main.view.components.TitleTextField]
  */
 @ExperimentalComposeUiApi
 @Composable
@@ -128,6 +128,14 @@ fun Home(
                         presenter.onTitleRegistered(title.value)
                     }
                 },
+                onHomeMenuClick = {
+                    runBlocking {
+                        presenter.onHomeMenuClicked()
+                    }
+                },
+                onPomodoroMenuClick = {
+                    presenter.onPomodoroMenuClicked()
+                },
                 onLicenseMenuClick = {
                     // presenter に通知
                     presenter.onLicenseClicked()
@@ -166,6 +174,14 @@ fun Home(
                         runBlocking {
                             presenter.onTitleRegistered(title.value)
                         }
+                    },
+                    onHomeMenuClick = {
+                        runBlocking {
+                            presenter.onHomeMenuClicked()
+                        }
+                    },
+                    onPomodoroMenuClick = {
+                        presenter.onPomodoroMenuClicked()
                     },
                     onLicenseMenuClick = {
                         // presenter に通知
