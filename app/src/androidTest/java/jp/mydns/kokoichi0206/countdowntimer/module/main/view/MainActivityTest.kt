@@ -85,6 +85,14 @@ class MainActivityTest {
         // Assert
         // License menu exists after clicking moreVert icon
         composeRule
+            .onNodeWithTag(TestTags.HOME_MENU)
+            .assertExists()
+            .assertTextEquals(Constants.HOME_MENU)
+        composeRule
+            .onNodeWithTag(TestTags.POMODORO_MENU)
+            .assertExists()
+            .assertTextEquals(Constants.POMODORO_MENU)
+        composeRule
             .onNodeWithTag(TestTags.LICENSE_MENU)
             .assertExists()
             .assertTextEquals(Constants.LICENSE_MENU)
