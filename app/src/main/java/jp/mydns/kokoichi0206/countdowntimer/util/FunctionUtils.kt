@@ -28,6 +28,7 @@ fun milliSecondsFromLocalDataTime(dateTime: LocalDateTime): Long {
 
 /**
  * タイマーの中心に表示する文字列。
+ * 『日付：時間：分:秒：ミリ秒』の形式（例: 2:23:21:43:337）
  *
  * @param[milliSeconds] ミリ秒単位での残り時間。
  * @return 整形された表示するための時間。
@@ -50,6 +51,17 @@ fun formattedTimeFromMilliSeconds(milliSeconds: Int): String {
     } else {
         "%02d:%02d:%02d:%03d".format(hour, min, sec, milli)
     }
+}
+
+/**
+ * ポモドーロタイマーの中心に表示する文字列。
+ * 『分:秒』の形式（例: 21:43）
+ *
+ * @param[milliSeconds] ミリ秒単位での残り時間。
+ * @return 整形された表示するための時間。
+ */
+fun minAndSecDisplayTime(milliSeconds: Long): String {
+    return "%2d:%02d".format((milliSeconds / (60 * 1000)).toInt(), ((milliSeconds / 1000) % 60).toInt())
 }
 
 /**

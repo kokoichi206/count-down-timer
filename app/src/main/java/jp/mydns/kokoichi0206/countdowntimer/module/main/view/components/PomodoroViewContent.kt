@@ -10,14 +10,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import jp.mydns.kokoichi0206.countdowntimer.util.Constants
 
 @Composable
-fun HomeViewContent(
+fun PomodoroViewContent(
+    titleModifier: Modifier = Modifier,
+    circleModifier: Modifier = Modifier,
     title: String,
-    onTitleFocusChanged: () -> Unit = {},
-    onTitleValueChanged: (String) -> Unit = {},
-    onTitleDone: () -> Unit = {},
     onLicenseMenuClick: () -> Unit = {},
     onPrivacyPolicyMenuClick: () -> Unit = {},
     circlePercentage: Float,
@@ -28,20 +26,14 @@ fun HomeViewContent(
 ) {
     // タイトルとメニューを横に並べている
     Row(
+        modifier = titleModifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TitleTextField(
-            onFocusChanged = {
-                onTitleFocusChanged()
-            },
+        Title(
+            modifier = Modifier
+                .weight(1f)
+                .padding(16.dp),
             title = title,
-            placeHolder = Constants.TIMER_TITLE_PLACEHOLDER,
-            onValueChanged = {
-                onTitleValueChanged(it)
-            },
-            onDone = {
-                onTitleDone()
-            },
         )
 
         MyDropDownMenu(
@@ -62,7 +54,7 @@ fun HomeViewContent(
 
     val strokeWidth = 12.dp
     BoxWithConstraints(
-        modifier = Modifier
+        modifier = circleModifier
             .fillMaxSize()
             .clip(shape = RectangleShape)
             .padding(strokeWidth / 2),

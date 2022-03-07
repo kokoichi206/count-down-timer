@@ -21,6 +21,8 @@ import jp.mydns.kokoichi0206.countdowntimer.util.TestTags
 
 @Composable
 fun MyDropDownMenu(
+    onHomeMenuClick: () -> Unit = {},
+    onPomodoroMenuClick: () -> Unit = {},
     onLicenseMenuClick: () -> Unit = {},
     onPrivacyPolicyMenuClick: () -> Unit = {},
 ) {
@@ -52,6 +54,38 @@ fun MyDropDownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
+            // Home 画面
+            DropdownMenuItem(
+                modifier = Modifier
+                    .testTag(TestTags.HOME_MENU),
+                onClick = {
+                    expanded = false
+                    onHomeMenuClick()
+                }
+            ) {
+                Text(
+                    text = Constants.HOME_MENU,
+                    fontSize = 24.sp,
+                    color = Color.White,
+                )
+            }
+
+            // ポモドーロタイマー画面
+            DropdownMenuItem(
+                modifier = Modifier
+                    .testTag(TestTags.POMODORO),
+                onClick = {
+                    expanded = false
+                    onPomodoroMenuClick()
+                }
+            ) {
+                Text(
+                    text = Constants.POMODORO_MENU,
+                    fontSize = 24.sp,
+                    color = Color.White,
+                )
+            }
+
             // License menu
             DropdownMenuItem(
                 modifier = Modifier

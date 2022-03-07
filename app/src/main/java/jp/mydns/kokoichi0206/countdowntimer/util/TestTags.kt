@@ -12,6 +12,8 @@ object TestTags {
 
     // MoreVert
     const val MORE_VERT_ICON = "MORE_VERT_ICON"
+    const val HOME_MENU = "HOME_MENU"
+    const val POMODORO = "POMODORO_MENU"
     const val LICENSE_MENU = "LICENSE_MENU"
     const val PRIVACY_POLICY_MENU = "PRIVACY_POLICY_MENU"
 }
