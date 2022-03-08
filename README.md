@@ -1,4 +1,5 @@
-![](https://img.shields.io/static/v1?label=version&message=1.0.1&color=green)
+![](https://img.shields.io/static/v1?label=version&message=1.2.0&color=green)
+
 # count-down-timer
 
 - [Google Play](https://play.google.com/store/apps/details?id=jp.mydns.kokoichi0206.countdowntimer)
