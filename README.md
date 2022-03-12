@@ -1,4 +1,4 @@
-![](https://img.shields.io/static/v1?label=version&message=1.2.0&color=green)
+![](https://img.shields.io/static/v1?label=version&message=1.2.0&color=green) [![Run tests every day](https://github.com/kokoichi206/count-down-timer/actions/workflows/schedule.yml/badge.svg?event=schedule)](https://github.com/kokoichi206/count-down-timer/actions/workflows/schedule.yml)
 
 # count-down-timer
 
