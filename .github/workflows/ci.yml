@@ -15,12 +15,15 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     uses: kokoichi206/count-down-timer/.github/workflows/build.yml@2ff30e9e3cd45946ced2c3c1bf3dd238d7f5d1dd
 
+  lint:
+    uses: kokoichi206/count-down-timer/.github/workflows/ktlint.yml@6de5a9fae68cf9cb0e84679cd1e008379982e631
+
   local-test:
-    needs: [ version-check, build ]
+    needs: [ version-check, build, lint ]
     uses: kokoichi206/count-down-timer/.github/workflows/local-test.yml@2ff30e9e3cd45946ced2c3c1bf3dd238d7f5d1dd
 
   android-emulator-test:
-    needs: [ version-check, build ]
+    needs: [ version-check, build, lint ]
     uses: kokoichi206/count-down-timer/.github/workflows/emulator-test.yml@2ff30e9e3cd45946ced2c3c1bf3dd238d7f5d1dd
 
   deploy:

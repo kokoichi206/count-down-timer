@@ -61,7 +61,6 @@ class MainInteractorTest {
         assertEquals(DataStoreManager.KEY_TIMER_TITLE, mockDataStoreManager.stringKey)
     }
 
-
     @Test
     fun getStartedTime() = runBlocking {
         // Arrange

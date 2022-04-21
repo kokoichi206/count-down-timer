@@ -4,9 +4,8 @@ import jp.mydns.kokoichi0206.countdowntimer.module.main.interactor.MockMainInter
 import jp.mydns.kokoichi0206.countdowntimer.module.main.router.MockMainRouter
 import jp.mydns.kokoichi0206.countdowntimer.module.main.view.MockMainView
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
-
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime

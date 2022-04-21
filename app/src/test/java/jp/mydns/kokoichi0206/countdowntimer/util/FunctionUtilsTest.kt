@@ -1,6 +1,6 @@
 package jp.mydns.kokoichi0206.countdowntimer.util
 
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -32,13 +32,13 @@ class FunctionUtilsTest {
         // including a leap year
         val str = "1974-01-01 09:00:00"
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        val dateTime = LocalDateTime.parse(str, formatter);
+        val dateTime = LocalDateTime.parse(str, formatter)
 
         // Act
         val result = milliSecondsFromLocalDataTime(dateTime)
 
         // Assert
-        assertEquals((4*365+1)*24*60*60*1000L, result)
+        assertEquals((4 * 365 + 1) * 24 * 60 * 60 * 1000L, result)
     }
 
     @Test
@@ -70,7 +70,7 @@ class FunctionUtilsTest {
         val result = milliSecondsBetween2DateTime(dateTime2, dateTime1)
 
         // Assert
-        assertEquals(2*24*60*60*1000, result)
+        assertEquals(2 * 24 * 60 * 60 * 1000, result)
     }
 
     @Test
@@ -90,16 +90,16 @@ class FunctionUtilsTest {
         // Arrange
         val testData = arrayOf(
             arrayOf(326, "00:00:00:326"),
-            arrayOf(40*1000, "00:00:40:000"),
-            arrayOf(360*1000, "00:06:00:000"),
-            arrayOf(60*60*1000, "01:00:00:000"),
-            arrayOf(27*60*60*1000, "1:03:00:00:000"),
-            arrayOf(11*24*60*60*1000, "11:00:00:00:000"),
+            arrayOf(40 * 1000, "00:00:40:000"),
+            arrayOf(360 * 1000, "00:06:00:000"),
+            arrayOf(60 * 60 * 1000, "01:00:00:000"),
+            arrayOf(27 * 60 * 60 * 1000, "1:03:00:00:000"),
+            arrayOf(11 * 24 * 60 * 60 * 1000, "11:00:00:00:000"),
         )
 
         // Act, Assert
         testData.forEach {
-            val result =  formattedTimeFromMilliSeconds(it[0] as Int)
+            val result = formattedTimeFromMilliSeconds(it[0] as Int)
             assertEquals(it[1], result)
         }
     }
