@@ -16,7 +16,7 @@ jobs:
     uses: kokoichi206/count-down-timer/.github/workflows/build.yml@2ff30e9e3cd45946ced2c3c1bf3dd238d7f5d1dd
 
   lint:
-    uses: kokoichi206/count-down-timer/.github/workflows/ktlint.yml@21624f042902bd2523f761b12445741a8b618069
+    uses: kokoichi206/count-down-timer/.github/workflows/ktlint.yml@6de5a9fae68cf9cb0e84679cd1e008379982e631
 
   local-test:
     needs: [ version-check, build, lint ]
