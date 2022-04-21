@@ -2,8 +2,11 @@ package jp.mydns.kokoichi0206.countdowntimer.module.main.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -16,7 +19,10 @@ import com.vanpra.composematerialdialogs.datetime.time.timepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import jp.mydns.kokoichi0206.countdowntimer.module.main.contract.MainContract
 import jp.mydns.kokoichi0206.countdowntimer.module.main.view.components.HomeViewContent
-import jp.mydns.kokoichi0206.countdowntimer.util.*
+import jp.mydns.kokoichi0206.countdowntimer.util.ChangeActionBarColor
+import jp.mydns.kokoichi0206.countdowntimer.util.Constants
+import jp.mydns.kokoichi0206.countdowntimer.util.formattedTimeFromMilliSeconds
+import jp.mydns.kokoichi0206.countdowntimer.util.milliSecondsBetween2DateTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDateTime
@@ -104,7 +110,6 @@ fun Home(
     if (cTime != 0L && step == SelectionStep.NONE) {
         step = SelectionStep.DONE
     }
-
 
     Box(
         modifier = Modifier
@@ -208,7 +213,6 @@ fun Home(
             }
         }
     }
-
 
     // Date picker dialog
     val dateDialogState = rememberMaterialDialogState()
@@ -323,7 +327,6 @@ fun Home(
         }
     }
 }
-
 
 /**
  * メイン画面のタイマーの選択状態を表すenumクラス。

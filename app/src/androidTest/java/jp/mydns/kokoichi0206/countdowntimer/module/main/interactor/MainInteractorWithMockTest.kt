@@ -4,9 +4,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import jp.mydns.kokoichi0206.countdowntimer.datamanager.DataStoreManager
 import jp.mydns.kokoichi0206.countdowntimer.datamanager.MockDataStoreManager
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
-
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime

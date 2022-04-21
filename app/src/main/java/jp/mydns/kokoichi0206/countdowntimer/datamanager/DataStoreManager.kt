@@ -28,7 +28,6 @@ open class DataStoreManager {
         const val KEY_DEADLINE = "deadline"
     }
 
-
     open suspend fun writeBoolean(context: Context, key: String, value: Boolean) =
         withContext(Dispatchers.IO) {
 

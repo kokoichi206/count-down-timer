@@ -46,7 +46,6 @@ fun PomodoroView(
 
     var isPlaying by remember { mutableStateOf(false) }
 
-
     var deadLine by remember {
         mutableStateOf(deadline ?: Constants.DefaultDataTime)
     }
@@ -160,7 +159,6 @@ fun PomodoroView(
             }
         }
     }
-
 
     // Timer
     LaunchedEffect(key1 = percentage, key2 = isVertical, key3 = isPlaying) {
